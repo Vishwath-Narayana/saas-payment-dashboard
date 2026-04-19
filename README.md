@@ -8,7 +8,7 @@ Mimics platforms like Stripe/Razorpay with real-time updates, RBAC, and MongoDB 
 
 ## Live Demo
 
-- **Frontend:** (saas-payment-dashboard.vercel.app)
+- **Frontend:** (https://saas-payment-dashboard.vercel.app)
 - **Backend:** (https://paydash-api.onrender.com](https://saas-payment-dashboard.onrender.com)
 
 ### Demo Accounts
