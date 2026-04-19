@@ -7,7 +7,7 @@ import { connectDB } from './config/db.js'
 import { initSocket } from './config/socket.js'
 import { initIO } from './config/socketInstance.js'
 import authRoutes from './routes/auth.routes.js'
-// import transactionRoutes from './routes/transaction.routes.js'
+import transactionRoutes from './routes/transaction.routes.js'
 import analyticsRoutes from './routes/analytics.routes.js'
 import adminRoutes from './routes/admin.routes.js'
 import { errorHandler } from './middleware/error.middleware.js'
@@ -26,7 +26,7 @@ app.use(cookieParser())
 
 // Routes
 app.use('/api/auth', authRoutes)
-// app.use('/api/transactions', transactionRoutes)
+app.use('/api/transactions', transactionRoutes)
 app.use('/api/analytics', analyticsRoutes)
 app.use('/api/admin', adminRoutes)
 

@@ -12,7 +12,7 @@ export const createTransaction = async (req, res) => {
     amount,
     method,
     description,
-    status: Transaction.randomStatus()   // 70% success / 20% failed / 10% pending
+    status: Transaction.randomStatus()
   })
 
   const populated = await transaction.populate('userId', 'name email')
@@ -25,14 +25,19 @@ export const createTransaction = async (req, res) => {
     metadata: { amount, method, status: transaction.status, transactionId: transaction._id }
   })
 
-  getIO().to(`user:${req.user._id}`).emit('new_transaction', populated)
-  getIO().to('admin').emit('new_transaction', populated)
-  getIO().to('admin').emit('stats_updated')
+  try {
+    const io = getIO()
+    io.to(`user:${req.user._id}`).emit('new_transaction', populated)
+    io.to('admin').emit('new_transaction', populated)
+    io.to('admin').emit('stats_updated')
+  } catch {
+    // Socket not connected — non-fatal, continue
+  }
 
   sendSuccess(res, { transaction: populated }, 'Transaction created', 201)
 }
 
-// ─── GET MY TRANSACTIONS (user) ───────────────────────────
+// ─── GET MY TRANSACTIONS ──────────────────────────────────
 export const getMyTransactions = async (req, res) => {
   const {
     page = 1, limit = 10,
@@ -50,9 +55,7 @@ export const getMyTransactions = async (req, res) => {
     if (startDate) filter.createdAt.$gte = new Date(startDate)
     if (endDate)   filter.createdAt.$lte = new Date(endDate)
   }
-  if (search && !isNaN(search)) {
-    filter.amount = Number(search)
-  }
+  if (search && !isNaN(search)) filter.amount = Number(search)
 
   const skip = (Number(page) - 1) * Number(limit)
 
@@ -86,7 +89,6 @@ export const getAllTransactions = async (req, res) => {
   } = req.query
 
   const filter = {}
-
   if (status)  filter.status = status
   if (method)  filter.method = method
   if (userId)  filter.userId = userId
