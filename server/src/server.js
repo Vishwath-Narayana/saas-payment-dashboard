@@ -9,7 +9,7 @@ import { initIO } from './config/socketInstance.js'
 import authRoutes from './routes/auth.routes.js'
 // import transactionRoutes from './routes/transaction.routes.js'
 import analyticsRoutes from './routes/analytics.routes.js'
-// import adminRoutes from './routes/admin.routes.js'
+import adminRoutes from './routes/admin.routes.js'
 import { errorHandler } from './middleware/error.middleware.js'
 import dotenv from 'dotenv'
 dotenv.config()
@@ -28,7 +28,7 @@ app.use(cookieParser())
 app.use('/api/auth', authRoutes)
 // app.use('/api/transactions', transactionRoutes)
 app.use('/api/analytics', analyticsRoutes)
-// app.use('/api/admin', adminRoutes)
+app.use('/api/admin', adminRoutes)
 
 // Error handler (must be last)
 app.use(errorHandler)
