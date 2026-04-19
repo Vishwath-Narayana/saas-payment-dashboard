@@ -1,11 +1,10 @@
 import Transaction from '../models/Transaction.js'
-import { asyncHandler } from '../utils/asyncHandler.js'
 import { sendSuccess } from '../utils/apiResponse.js'
 import { createLog } from '../utils/createLog.js'
-import { io } from '../server.js'
+import { getIO } from '../config/socketInstance.js'
 
 // ─── CREATE ───────────────────────────────────────────────
-export const createTransaction = asyncHandler(async (req, res) => {
+export const createTransaction = async (req, res) => {
   const { amount, method, description } = req.body
 
   const transaction = await Transaction.create({
@@ -16,7 +15,6 @@ export const createTransaction = asyncHandler(async (req, res) => {
     status: Transaction.randomStatus()   // 70% success / 20% failed / 10% pending
   })
 
-  // Populate user for socket payload
   const populated = await transaction.populate('userId', 'name email')
 
   await createLog({
@@ -27,16 +25,15 @@ export const createTransaction = asyncHandler(async (req, res) => {
     metadata: { amount, method, status: transaction.status, transactionId: transaction._id }
   })
 
-  // Real-time: notify user + all admins
-  io.to(`user:${req.user._id}`).emit('new_transaction', populated)
-  io.to('admin').emit('new_transaction', populated)
-  io.to('admin').emit('stats_updated')   // trigger analytics refetch
+  getIO().to(`user:${req.user._id}`).emit('new_transaction', populated)
+  getIO().to('admin').emit('new_transaction', populated)
+  getIO().to('admin').emit('stats_updated')
 
   sendSuccess(res, { transaction: populated }, 'Transaction created', 201)
-})
+}
 
 // ─── GET MY TRANSACTIONS (user) ───────────────────────────
-export const getMyTransactions = asyncHandler(async (req, res) => {
+export const getMyTransactions = async (req, res) => {
   const {
     page = 1, limit = 10,
     status, method,
@@ -54,7 +51,7 @@ export const getMyTransactions = asyncHandler(async (req, res) => {
     if (endDate)   filter.createdAt.$lte = new Date(endDate)
   }
   if (search && !isNaN(search)) {
-    filter.amount = Number(search)   // search by exact amount
+    filter.amount = Number(search)
   }
 
   const skip = (Number(page) - 1) * Number(limit)
@@ -77,10 +74,10 @@ export const getMyTransactions = asyncHandler(async (req, res) => {
       pages: Math.ceil(total / Number(limit))
     }
   })
-})
+}
 
 // ─── GET ALL TRANSACTIONS (admin) ─────────────────────────
-export const getAllTransactions = asyncHandler(async (req, res) => {
+export const getAllTransactions = async (req, res) => {
   const {
     page = 1, limit = 10,
     status, method,
@@ -119,17 +116,16 @@ export const getAllTransactions = asyncHandler(async (req, res) => {
       pages: Math.ceil(total / Number(limit))
     }
   })
-})
+}
 
 // ─── GET ONE ──────────────────────────────────────────────
-export const getTransaction = asyncHandler(async (req, res) => {
+export const getTransaction = async (req, res) => {
   const transaction = await Transaction.findById(req.params.id)
     .populate('userId', 'name email')
 
   if (!transaction)
     return res.status(404).json({ success: false, error: 'Transaction not found' })
 
-  // User can only view own transactions
   if (
     req.user.role !== 'admin' &&
     transaction.userId._id.toString() !== req.user._id.toString()
@@ -144,4 +140,4 @@ export const getTransaction = asyncHandler(async (req, res) => {
   })
 
   sendSuccess(res, { transaction })
-})
+}

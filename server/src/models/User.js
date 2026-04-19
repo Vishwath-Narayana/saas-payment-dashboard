@@ -14,11 +14,10 @@ const userSchema = new mongoose.Schema({
   role: { type: String, enum: ['user', 'admin'], default: 'user' },
 }, { timestamps: true })
 
-// Hash before save
-userSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) return next()
+// Hash before save - removed next as it is async
+userSchema.pre('save', async function () {
+  if (!this.isModified('password')) return
   this.password = await bcrypt.hash(this.password, 12)
-  next()
 })
 
 // Instance method — compare password on login
