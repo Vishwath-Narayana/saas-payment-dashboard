@@ -35,8 +35,27 @@ app.use(errorHandler)
 
 // Init
 initSocket(io)
-connectDB().then(() => {
-  httpServer.listen(process.env.PORT || 5001, () =>
-    console.log(`Server running on port ${process.env.PORT || 5001}`)
-  )
+connectDB()
+  .then(() => {
+    httpServer.listen(process.env.PORT || 5001, () =>
+      console.log(`Server running on port ${process.env.PORT || 5001}`)
+    )
+  })
+  .catch((err) => {
+    console.error('STARTUP ERROR:', err.message)
+    console.error(err.stack)
+    process.exit(1)
+  })
+
+process.on('uncaughtException', (err) => {
+  console.error('UNCAUGHT EXCEPTION:', err.message)
+  console.error(err.stack)
+  process.exit(1)
 })
+
+process.on('unhandledRejection', (err) => {
+  console.error('UNHANDLED REJECTION:', err.message)
+  console.error(err.stack)
+  process.exit(1)
+})
+
