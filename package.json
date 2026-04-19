@@ -1,0 +1,29 @@
+{
+  "devDependencies": {
+    "@types/node": "^25.6.0",
+    "concurrently": "^9.2.1"
+  },
+  "name": "saas-payment-dashboard",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "undici-types": "^7.19.2"
+  },
+  "scripts": {
+    "dev": "concurrently \"npm run dev --prefix server\" \"npm run dev --prefix client\"",
+    "seed": "node server/src/seed.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vishwath-Narayana/saas-payment-dashboard.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Vishwath-Narayana/saas-payment-dashboard/issues"
+  },
+  "homepage": "https://github.com/Vishwath-Narayana/saas-payment-dashboard#readme"
+}
