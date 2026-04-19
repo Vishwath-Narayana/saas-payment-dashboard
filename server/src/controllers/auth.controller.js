@@ -9,16 +9,16 @@ const signToken = (id, role) =>
 const attachCookie = (res, token) =>
   res.cookie('token', token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'strict',
+    secure: true,                    // always true for cross-domain
+    sameSite: 'none',                // required for cross-domain
     maxAge: 7 * 24 * 60 * 60 * 1000
   })
 
 const attachSocketToken = (res, token) =>
   res.cookie('socketToken', token, {
     httpOnly: false,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'strict',
+    secure: true,                    // always true
+    sameSite: 'none',                // required
     maxAge: 7 * 24 * 60 * 60 * 1000
   })
 
