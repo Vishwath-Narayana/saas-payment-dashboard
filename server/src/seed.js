@@ -18,7 +18,7 @@ const randomDate = (daysAgo) => {
   d.setDate(d.getDate() - Math.floor(Math.random() * daysAgo))
   d.setHours(Math.floor(Math.random() * 24))
   d.setMinutes(Math.floor(Math.random() * 60))
-  return d
+  return new Date(d.toISOString())  // force proper Date object
 }
 
 const seed = async () => {
@@ -75,12 +75,12 @@ const seed = async () => {
       status,
       method: random(METHODS),
       description: `Payment #${i + 1}`,
-      createdAt,
-      updatedAt: createdAt
+      createdAt: new Date(createdAt),   // explicit cast
+      updatedAt: new Date(createdAt)
     })
   }
 
-  await Transaction.insertMany(transactions)
+  await Transaction.collection.insertMany(transactions)
   console.log(`${transactions.length} transactions created`)
 
   // Create logs for each transaction
@@ -93,7 +93,7 @@ const seed = async () => {
     createdAt: t.createdAt
   }))
 
-  await Log.insertMany(logs)
+  await Log.collection.insertMany(logs)
   console.log(`${logs.length} logs created`)
 
   console.log('\n✅ Seed complete!')
