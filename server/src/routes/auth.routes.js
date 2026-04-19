@@ -3,9 +3,6 @@ import { body, validationResult } from 'express-validator'
 import { signup, login, logout, getMe } from '../controllers/auth.controller.js'
 import { verifyToken } from '../middleware/auth.middleware.js'
 
-console.log('signup type:', typeof signup)
-console.log('login type:', typeof login)
-
 const router = Router()
 
 const validate = (req, res, next) => {

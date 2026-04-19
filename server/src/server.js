@@ -12,7 +12,7 @@ import analyticsRoutes from './routes/analytics.routes.js'
 import adminRoutes from './routes/admin.routes.js'
 import { errorHandler } from './middleware/error.middleware.js'
 import dotenv from 'dotenv'
-dotenv.config()
+if (process.env.NODE_ENV !== 'production') dotenv.config()
 
 const app = express()
 const httpServer = createServer(app)
