@@ -1,1 +1,3 @@
-export default function AdminUsers() { return <div>Admin Users</div> }
+export default function AdminUsers() {
+  return <div className="text-white text-xl font-bold">User Management coming soon</div>
+}
