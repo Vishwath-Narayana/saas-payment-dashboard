@@ -9,7 +9,9 @@ const api = axios.create({
 api.interceptors.response.use(
   (res) => res,
   (err) => {
-    if (err.response?.status === 401) {
+    // Only redirect on 401 if NOT the session check
+    const isSessionCheck = err.config?.url?.includes('/auth/me')
+    if (err.response?.status === 401 && !isSessionCheck) {
       window.location.href = '/login'
     }
     return Promise.reject(err)
