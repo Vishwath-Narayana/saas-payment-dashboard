@@ -33,22 +33,22 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen bg-zinc-950 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-canvas flex items-center justify-center p-4">
       <div className="w-full max-w-md space-y-6">
 
         {/* Logo */}
         <div className="flex flex-col items-center gap-2">
-          <div className="p-3 bg-indigo-600 rounded-xl">
-            <CreditCard className="h-7 w-7 text-white" />
+          <div className="p-2 bg-primary rounded-[8px] shadow-sm">
+            <CreditCard className="h-6 w-6 text-onPrimary" />
           </div>
-          <h1 className="text-2xl font-bold text-white">PayDash</h1>
-          <p className="text-zinc-400 text-sm">Payment Analytics Platform</p>
+          <h1 className="text-[28px] font-semibold text-ink tracking-tight">PayDash</h1>
+          <p className="text-slate text-sm">Payment Analytics Platform</p>
         </div>
 
-        <Card className="bg-zinc-900 border-zinc-800">
+        <Card className="bg-canvas border-hairline shadow-sm rounded-[12px]">
           <CardHeader className="space-y-1">
-            <CardTitle className="text-xl text-white">Welcome back</CardTitle>
-            <CardDescription className="text-zinc-400">
+            <CardTitle className="text-xl text-ink tracking-tight font-semibold">Welcome back</CardTitle>
+            <CardDescription className="text-slate">
               Sign in to your account
             </CardDescription>
           </CardHeader>
@@ -58,14 +58,14 @@ export default function Login() {
 
               {/* Error */}
               {error && (
-                <div className="flex items-center gap-2 p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
-                  <AlertCircle className="h-4 w-4 text-red-400 shrink-0" />
-                  <p className="text-red-400 text-sm">{error}</p>
+                <div className="flex items-center gap-2 p-3 bg-cardTint-rose border border-semantic-error/20 rounded-md">
+                  <AlertCircle className="h-4 w-4 text-semantic-error shrink-0" />
+                  <p className="text-semantic-error text-sm font-medium">{error}</p>
                 </div>
               )}
 
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-zinc-300">Email</Label>
+                <Label htmlFor="email" className="text-charcoal font-medium">Email</Label>
                 <Input
                   id="email"
                   name="email"
@@ -74,13 +74,13 @@ export default function Login() {
                   value={form.email}
                   onChange={handleChange}
                   required
-                  className="bg-zinc-800 border-zinc-700 text-white placeholder:text-zinc-500
-                             focus:border-indigo-500 focus:ring-indigo-500"
+                  className="bg-canvas border-hairline-strong text-ink placeholder:text-stone
+                             focus-visible:border-primary focus-visible:ring-primary rounded-md h-[44px]"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="password" className="text-zinc-300">Password</Label>
+                <Label htmlFor="password" className="text-charcoal font-medium">Password</Label>
                 <Input
                   id="password"
                   name="password"
@@ -89,15 +89,15 @@ export default function Login() {
                   value={form.password}
                   onChange={handleChange}
                   required
-                  className="bg-zinc-800 border-zinc-700 text-white placeholder:text-zinc-500
-                             focus:border-indigo-500 focus:ring-indigo-500"
+                  className="bg-canvas border-hairline-strong text-ink placeholder:text-stone
+                             focus-visible:border-primary focus-visible:ring-primary rounded-md h-[44px]"
                 />
               </div>
 
               <Button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-indigo-600 hover:bg-indigo-700 text-white"
+                className="w-full bg-primary hover:bg-primary-pressed text-onPrimary h-[44px] rounded-[8px] font-medium"
               >
                 {loading
                   ? <><Loader2 className="h-4 w-4 mr-2 animate-spin" />Signing in...</>
@@ -108,15 +108,15 @@ export default function Login() {
             </form>
 
             {/* Quick login hints for demo */}
-            <div className="mt-4 p-3 bg-zinc-800/50 rounded-lg space-y-1">
-              <p className="text-zinc-500 text-xs font-medium uppercase tracking-wide">Demo accounts</p>
-              <p className="text-zinc-400 text-xs">Admin: admin@example.com / 123456</p>
-              <p className="text-zinc-400 text-xs">User: arjun@example.com / 123456</p>
+            <div className="mt-4 p-3 bg-surface border border-hairline rounded-[8px] space-y-1">
+              <p className="text-stone text-[11px] font-semibold uppercase tracking-widest mb-2">Demo accounts</p>
+              <p className="text-slate text-xs font-medium">Admin: admin@example.com / 123456</p>
+              <p className="text-slate text-xs font-medium">User: arjun@example.com / 123456</p>
             </div>
 
-            <p className="mt-4 text-center text-sm text-zinc-400">
+            <p className="mt-6 text-center text-sm text-slate">
               No account?{' '}
-              <Link to="/signup" className="text-indigo-400 hover:text-indigo-300 font-medium">
+              <Link to="/signup" className="text-link hover:text-link-pressed font-medium">
                 Sign up
               </Link>
             </p>

@@ -5,17 +5,17 @@ const config = {
   success: {
     label: 'Success',
     icon:  CheckCircle2,
-    class: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
+    class: 'bg-cardTint-mint text-semantic-success border-semantic-success/20'
   },
   failed: {
     label: 'Failed',
     icon:  XCircle,
-    class: 'bg-red-500/10 text-red-400 border-red-500/20'
+    class: 'bg-cardTint-rose text-semantic-error border-semantic-error/20'
   },
   pending: {
     label: 'Pending',
     icon:  Clock,
-    class: 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20'
+    class: 'bg-cardTint-yellow text-brand-orange border-brand-orange/20'
   }
 }
 

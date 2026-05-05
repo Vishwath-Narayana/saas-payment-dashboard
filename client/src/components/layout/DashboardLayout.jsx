@@ -16,11 +16,11 @@ export function DashboardLayout() {
   })
 
   return (
-    <div className="flex h-screen bg-zinc-950 overflow-hidden">
+    <div className="flex h-screen bg-canvas overflow-hidden">
       <Sidebar />
       <div className="flex-1 flex flex-col overflow-hidden">
         <Navbar notifCount={notifCount} />
-        <main className="flex-1 overflow-y-auto p-6">
+        <main className="flex-1 overflow-y-auto p-6 bg-surface">
           <Outlet />
         </main>
       </div>

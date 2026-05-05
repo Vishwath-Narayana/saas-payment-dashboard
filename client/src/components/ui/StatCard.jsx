@@ -17,42 +17,42 @@ export default function StatCard({
   const trendNeutral  = trend?.value === 0
 
   return (
-    <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 space-y-4">
+    <div className="bg-canvas border border-hairline rounded-[12px] p-6 space-y-4 hover:shadow-sm transition-shadow">
       
       {/* Header */}
       <div className="flex items-center justify-between">
-        <p className="text-zinc-400 text-sm font-medium">{title}</p>
-        <div className={cn('p-2 rounded-lg', iconBg)}>
+        <p className="text-slate text-sm font-medium tracking-tight">{title}</p>
+        <div className={cn('p-2 rounded-md', iconBg)}>
           <Icon className={cn('h-5 w-5', iconColor)} />
         </div>
       </div>
 
       {/* Value */}
       <div className="space-y-1">
-        <p className="text-white text-3xl font-bold tracking-tight">{value}</p>
+        <p className="text-ink text-[28px] leading-tight font-semibold tracking-tight">{value}</p>
         {subtitle && (
-          <p className="text-zinc-500 text-xs">{subtitle}</p>
+          <p className="text-stone text-xs font-medium">{subtitle}</p>
         )}
       </div>
 
       {/* Trend */}
       {trend && (
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-1.5 mt-2">
           {trendNeutral ? (
-            <Minus className="h-3.5 w-3.5 text-zinc-400" />
+            <Minus className="h-3.5 w-3.5 text-stone" />
           ) : trendPositive ? (
-            <TrendingUp className="h-3.5 w-3.5 text-emerald-400" />
+            <TrendingUp className="h-3.5 w-3.5 text-semantic-success" />
           ) : (
-            <TrendingDown className="h-3.5 w-3.5 text-red-400" />
+            <TrendingDown className="h-3.5 w-3.5 text-semantic-error" />
           )}
           <span className={cn(
-            'text-xs font-medium',
-            trendNeutral  ? 'text-zinc-400' :
-            trendPositive ? 'text-emerald-400' : 'text-red-400'
+            'text-xs font-semibold',
+            trendNeutral  ? 'text-stone' :
+            trendPositive ? 'text-semantic-success' : 'text-semantic-error'
           )}>
             {trendPositive && '+'}{trend.value}%
           </span>
-          <span className="text-zinc-500 text-xs">{trend.label}</span>
+          <span className="text-stone text-xs">{trend.label}</span>
         </div>
       )}
     </div>
@@ -61,16 +61,16 @@ export default function StatCard({
 
 export function StatCardSkeleton() {
   return (
-    <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 space-y-4 animate-pulse">
+    <div className="bg-canvas border border-hairline rounded-[12px] p-6 space-y-4 animate-pulse">
       <div className="flex items-center justify-between">
-        <div className="h-4 w-24 bg-zinc-800 rounded" />
-        <div className="h-9 w-9 bg-zinc-800 rounded-lg" />
+        <div className="h-4 w-24 bg-surface-soft rounded-md" />
+        <div className="h-9 w-9 bg-surface-soft rounded-md" />
       </div>
       <div className="space-y-2">
-        <div className="h-8 w-32 bg-zinc-800 rounded" />
-        <div className="h-3 w-20 bg-zinc-800 rounded" />
+        <div className="h-8 w-32 bg-surface-soft rounded-md" />
+        <div className="h-3 w-20 bg-surface-soft rounded-md" />
       </div>
-      <div className="h-3 w-28 bg-zinc-800 rounded" />
+      <div className="h-3 w-28 bg-surface-soft rounded-md" />
     </div>
   )
 }

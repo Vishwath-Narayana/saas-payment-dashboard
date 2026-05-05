@@ -11,10 +11,10 @@ import { formatDate } from '../../utils/formatDate'
 import { FileText, ChevronLeft, ChevronRight } from 'lucide-react'
 
 const ACTION_COLORS = {
-  PAYMENT_CREATED: 'bg-indigo-500/10 text-indigo-400',
-  USER_LOGIN:      'bg-blue-500/10 text-blue-400',
-  USER_SIGNUP:     'bg-emerald-500/10 text-emerald-400',
-  PAYMENT_VIEWED:  'bg-zinc-500/10 text-zinc-400',
+  PAYMENT_CREATED: 'bg-cardTint-lavender text-brand-purple',
+  USER_LOGIN:      'bg-cardTint-sky text-brand-teal',
+  USER_SIGNUP:     'bg-cardTint-mint text-semantic-success',
+  PAYMENT_VIEWED:  'bg-surface border border-hairline-strong text-charcoal',
 }
 
 const ACTION_LABELS = {
@@ -48,39 +48,39 @@ export default function AdminLogs() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-white text-xl font-semibold">Activity Logs</h2>
-          <p className="text-zinc-400 text-sm mt-0.5">
+          <h2 className="text-ink text-2xl font-semibold tracking-tight">Activity Logs</h2>
+          <p className="text-slate text-sm mt-0.5">
             {pagination.total ? `${pagination.total} total events` : 'System activity'}
           </p>
         </div>
 
         <Select value={action} onValueChange={v => { setAction(v); setPage(1) }}>
-          <SelectTrigger className="w-44 bg-zinc-900 border-zinc-800 text-zinc-300">
+          <SelectTrigger className="w-44 h-10 bg-canvas border-hairline-strong text-ink rounded-md">
             <SelectValue placeholder="Filter action" />
           </SelectTrigger>
-          <SelectContent className="bg-zinc-800 border-zinc-700">
-            <SelectItem value="all"             className="text-white focus:bg-zinc-700">All Actions</SelectItem>
-            <SelectItem value="PAYMENT_CREATED" className="text-white focus:bg-zinc-700">Payment Created</SelectItem>
-            <SelectItem value="USER_LOGIN"      className="text-white focus:bg-zinc-700">User Login</SelectItem>
-            <SelectItem value="USER_SIGNUP"     className="text-white focus:bg-zinc-700">User Signup</SelectItem>
-            <SelectItem value="PAYMENT_VIEWED"  className="text-white focus:bg-zinc-700">Payment Viewed</SelectItem>
+          <SelectContent className="bg-canvas border-hairline rounded-md shadow-md">
+            <SelectItem value="all"             className="text-ink focus:bg-surface-soft">All Actions</SelectItem>
+            <SelectItem value="PAYMENT_CREATED" className="text-ink focus:bg-surface-soft">Payment Created</SelectItem>
+            <SelectItem value="USER_LOGIN"      className="text-ink focus:bg-surface-soft">User Login</SelectItem>
+            <SelectItem value="USER_SIGNUP"     className="text-ink focus:bg-surface-soft">User Signup</SelectItem>
+            <SelectItem value="PAYMENT_VIEWED"  className="text-ink focus:bg-surface-soft">Payment Viewed</SelectItem>
           </SelectContent>
         </Select>
       </div>
 
       {/* Log list */}
-      <div className="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden">
+      <div className="bg-canvas border border-hairline rounded-[12px] overflow-hidden shadow-sm">
         {isLoading ? (
           <div className="p-4 space-y-3 animate-pulse">
             {Array(8).fill(0).map((_, i) => (
-              <div key={i} className="flex items-center gap-4 p-3">
-                <div className="h-8 w-8 bg-zinc-800 rounded-full" />
+              <div key={i} className="flex items-center gap-4 p-3 bg-surface-soft rounded-md">
+                <div className="h-8 w-8 bg-hairline rounded-full" />
                 <div className="flex-1 space-y-1.5">
-                  <div className="h-3 w-56 bg-zinc-800 rounded" />
-                  <div className="h-3 w-32 bg-zinc-800 rounded" />
+                  <div className="h-3 w-56 bg-hairline rounded-sm" />
+                  <div className="h-3 w-32 bg-hairline rounded-sm" />
                 </div>
-                <div className="h-6 w-28 bg-zinc-800 rounded-full" />
-                <div className="h-3 w-24 bg-zinc-800 rounded" />
+                <div className="h-6 w-28 bg-hairline rounded-full" />
+                <div className="h-3 w-24 bg-hairline rounded-sm" />
               </div>
             ))}
           </div>
@@ -91,38 +91,38 @@ export default function AdminLogs() {
             description="Activity will appear here as users interact with the platform"
           />
         ) : (
-          <div className="divide-y divide-zinc-800">
+          <div className="divide-y divide-hairline">
             {logs.map(log => (
               <div key={log._id}
-                className="flex items-center gap-4 px-6 py-4 hover:bg-zinc-800/40 transition-colors"
+                className="flex items-center gap-4 px-6 py-4 hover:bg-surface-soft transition-colors cursor-pointer"
               >
                 {/* Avatar */}
-                <div className="h-8 w-8 rounded-full bg-indigo-600/20 flex items-center
+                <div className="h-8 w-8 rounded-full bg-brand-lavender border border-hairline-strong flex items-center
                                 justify-center shrink-0">
-                  <span className="text-indigo-400 text-xs font-bold">
+                  <span className="text-brand-purple800 text-xs font-semibold">
                     {log.userName?.[0]?.toUpperCase() || '?'}
                   </span>
                 </div>
 
                 {/* Info */}
                 <div className="flex-1 min-w-0">
-                  <p className="text-zinc-300 text-sm truncate">
-                    <span className="text-white font-medium">{log.userName}</span>
+                  <p className="text-charcoal text-sm truncate">
+                    <span className="text-ink font-medium tracking-tight">{log.userName}</span>
                     {log.metadata?.amount && (
-                      <span className="text-zinc-400"> — ₹{log.metadata.amount} via {log.metadata.method}</span>
+                      <span className="text-slate"> — ₹{log.metadata.amount} via {log.metadata.method}</span>
                     )}
                   </p>
-                  <p className="text-zinc-500 text-xs">{log.userEmail}</p>
+                  <p className="text-slate text-[13px] mt-0.5">{log.userEmail}</p>
                 </div>
 
                 {/* Action badge */}
-                <span className={`px-2.5 py-1 rounded-full text-xs font-medium shrink-0
-                                  ${ACTION_COLORS[log.action] || 'bg-zinc-800 text-zinc-400'}`}>
+                <span className={`px-2.5 py-1 rounded-sm text-[11px] font-semibold tracking-widest uppercase shrink-0
+                                  ${ACTION_COLORS[log.action] || 'bg-surface border border-hairline-strong text-charcoal'}`}>
                   {ACTION_LABELS[log.action] || log.action}
                 </span>
 
                 {/* Date */}
-                <span className="text-zinc-500 text-xs shrink-0 hidden sm:block">
+                <span className="text-stone text-[13px] shrink-0 hidden sm:block">
                   {formatDate(log.createdAt)}
                 </span>
               </div>
@@ -133,8 +133,8 @@ export default function AdminLogs() {
 
       {/* Pagination */}
       {pagination.pages > 1 && (
-        <div className="flex items-center justify-between">
-          <p className="text-zinc-400 text-sm">
+        <div className="flex items-center justify-between mt-4">
+          <p className="text-slate text-[13px] font-medium">
             Page {pagination.page} of {pagination.pages}
           </p>
           <div className="flex gap-2">
@@ -142,7 +142,7 @@ export default function AdminLogs() {
               variant="outline" size="sm"
               onClick={() => setPage(p => p - 1)}
               disabled={page === 1}
-              className="border-zinc-700 text-zinc-300 hover:bg-zinc-800 disabled:opacity-40"
+              className="border-hairline text-charcoal hover:bg-surface-soft disabled:opacity-40"
             >
               <ChevronLeft className="h-4 w-4" />
             </Button>
@@ -150,7 +150,7 @@ export default function AdminLogs() {
               variant="outline" size="sm"
               onClick={() => setPage(p => p + 1)}
               disabled={page === pagination.pages}
-              className="border-zinc-700 text-zinc-300 hover:bg-zinc-800 disabled:opacity-40"
+              className="border-hairline text-charcoal hover:bg-surface-soft disabled:opacity-40"
             >
               <ChevronRight className="h-4 w-4" />
             </Button>

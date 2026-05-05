@@ -14,18 +14,18 @@ export default function EmptyState({
       className
     )}>
       {Icon && (
-        <div className="p-4 bg-zinc-800 rounded-full mb-4">
-          <Icon className="h-8 w-8 text-zinc-500" />
+        <div className="p-4 bg-surface-soft border border-hairline rounded-full mb-4">
+          <Icon className="h-8 w-8 text-stone" />
         </div>
       )}
-      <h3 className="text-white font-medium text-lg mb-1">{title}</h3>
+      <h3 className="text-ink font-semibold tracking-tight text-lg mb-1">{title}</h3>
       {description && (
-        <p className="text-zinc-400 text-sm max-w-sm mb-6">{description}</p>
+        <p className="text-slate text-sm max-w-sm mb-6">{description}</p>
       )}
       {action && (
         <Button
           onClick={action.onClick}
-          className="bg-indigo-600 hover:bg-indigo-700 text-white"
+          className="bg-primary hover:bg-primary-pressed text-onPrimary font-medium rounded-md px-4 h-[36px]"
         >
           {action.label}
         </Button>

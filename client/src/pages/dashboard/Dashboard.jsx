@@ -45,32 +45,32 @@ export default function Dashboard() {
               value={formatCurrency(summary?.totalRevenue || 0)}
               subtitle="Successful payments only"
               icon={DollarSign}
-              iconColor="text-indigo-400"
-              iconBg="bg-indigo-400/10"
+              iconColor="text-brand-purple"
+              iconBg="bg-cardTint-lavender"
             />
             <StatCard
               title="Total Transactions"
               value={summary?.totalTransactions || 0}
               subtitle="All time"
               icon={ArrowLeftRight}
-              iconColor="text-blue-400"
-              iconBg="bg-blue-400/10"
+              iconColor="text-brand-teal"
+              iconBg="bg-cardTint-sky"
             />
             <StatCard
               title="Success Rate"
               value={`${summary?.successRate || 0}%`}
               subtitle={`${summary?.successCount || 0} successful`}
               icon={CheckCircle2}
-              iconColor="text-emerald-400"
-              iconBg="bg-emerald-400/10"
+              iconColor="text-semantic-success"
+              iconBg="bg-cardTint-mint"
             />
             <StatCard
               title="Failed"
               value={summary?.failedCount || 0}
               subtitle={`${summary?.pendingCount || 0} pending`}
               icon={XCircle}
-              iconColor="text-red-400"
-              iconBg="bg-red-400/10"
+              iconColor="text-semantic-error"
+              iconBg="bg-cardTint-rose"
             />
           </>
         )}
@@ -103,10 +103,10 @@ export default function Dashboard() {
 
 function ChartSkeleton() {
   return (
-    <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 animate-pulse">
-      <div className="h-4 w-32 bg-zinc-800 rounded mb-1" />
-      <div className="h-3 w-20 bg-zinc-800 rounded mb-6" />
-      <div className="h-64 bg-zinc-800 rounded" />
+    <div className="bg-canvas border border-hairline rounded-[12px] p-6 animate-pulse">
+      <div className="h-4 w-32 bg-surface-soft rounded-md mb-1" />
+      <div className="h-3 w-20 bg-surface-soft rounded-md mb-6" />
+      <div className="h-64 bg-surface-soft rounded-md" />
     </div>
   )
 }

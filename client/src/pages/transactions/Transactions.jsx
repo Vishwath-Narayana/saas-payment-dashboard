@@ -25,12 +25,12 @@ function TableSkeleton() {
   return (
     <div className="animate-pulse space-y-3">
       {Array(8).fill(0).map((_, i) => (
-        <div key={i} className="flex items-center gap-4 p-4 bg-zinc-900 rounded-lg">
-          <div className="h-4 w-24 bg-zinc-800 rounded" />
-          <div className="h-4 w-32 bg-zinc-800 rounded flex-1" />
-          <div className="h-4 w-16 bg-zinc-800 rounded" />
-          <div className="h-6 w-20 bg-zinc-800 rounded-full" />
-          <div className="h-4 w-28 bg-zinc-800 rounded" />
+        <div key={i} className="flex items-center gap-4 p-4 bg-surface-soft rounded-md">
+          <div className="h-4 w-24 bg-hairline rounded-sm" />
+          <div className="h-4 w-32 bg-hairline rounded-sm flex-1" />
+          <div className="h-4 w-16 bg-hairline rounded-sm" />
+          <div className="h-6 w-20 bg-hairline rounded-full" />
+          <div className="h-4 w-28 bg-hairline rounded-sm" />
         </div>
       ))}
     </div>
@@ -80,8 +80,8 @@ export default function Transactions() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-white text-xl font-semibold">Transactions</h2>
-          <p className="text-zinc-400 text-sm mt-0.5">
+          <h2 className="text-ink text-2xl font-semibold tracking-tight">Transactions</h2>
+          <p className="text-slate text-sm mt-0.5">
             {pagination.total
               ? `${pagination.total} total transactions`
               : 'Your payment history'
@@ -91,7 +91,7 @@ export default function Transactions() {
         {!isAdmin && (
           <Button
             onClick={() => setModalOpen(true)}
-            className="bg-indigo-600 hover:bg-indigo-700 text-white"
+            className="bg-primary hover:bg-primary-pressed text-onPrimary h-[36px] rounded-md px-4 font-medium"
           >
             <Plus className="h-4 w-4 mr-2" />
             New Payment
@@ -101,38 +101,38 @@ export default function Transactions() {
 
       {/* Filters */}
       <div className="flex flex-wrap gap-3">
-        <div className="relative flex-1 min-w-48">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-500" />
+        <div className="relative flex-1 min-w-[200px]">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-stone" />
           <Input
             placeholder="Search by amount..."
             value={search}
             onChange={e => { setSearch(e.target.value); setPage(1) }}
-            className="pl-9 bg-zinc-900 border-zinc-800 text-white
-                       placeholder:text-zinc-500 focus:border-indigo-500"
+            className="pl-9 h-10 bg-canvas border-hairline-strong text-ink rounded-md
+                       placeholder:text-stone focus-visible:ring-primary focus-visible:border-primary"
           />
         </div>
 
         <Select value={status} onValueChange={v => { setStatus(v); setPage(1) }}>
-          <SelectTrigger className="w-36 bg-zinc-900 border-zinc-800 text-zinc-300">
+          <SelectTrigger className="w-36 h-10 bg-canvas border-hairline-strong text-ink rounded-md">
             <SelectValue placeholder="Status" />
           </SelectTrigger>
-          <SelectContent className="bg-zinc-800 border-zinc-700">
-            <SelectItem value="all"     className="text-white focus:bg-zinc-700">All Status</SelectItem>
-            <SelectItem value="success" className="text-white focus:bg-zinc-700">Success</SelectItem>
-            <SelectItem value="failed"  className="text-white focus:bg-zinc-700">Failed</SelectItem>
-            <SelectItem value="pending" className="text-white focus:bg-zinc-700">Pending</SelectItem>
+          <SelectContent className="bg-canvas border-hairline rounded-md shadow-md">
+            <SelectItem value="all"     className="text-ink focus:bg-surface-soft">All Status</SelectItem>
+            <SelectItem value="success" className="text-ink focus:bg-surface-soft">Success</SelectItem>
+            <SelectItem value="failed"  className="text-ink focus:bg-surface-soft">Failed</SelectItem>
+            <SelectItem value="pending" className="text-ink focus:bg-surface-soft">Pending</SelectItem>
           </SelectContent>
         </Select>
 
         <Select value={method} onValueChange={v => { setMethod(v); setPage(1) }}>
-          <SelectTrigger className="w-36 bg-zinc-900 border-zinc-800 text-zinc-300">
+          <SelectTrigger className="w-36 h-10 bg-canvas border-hairline-strong text-ink rounded-md">
             <SelectValue placeholder="Method" />
           </SelectTrigger>
-          <SelectContent className="bg-zinc-800 border-zinc-700">
-            <SelectItem value="all"    className="text-white focus:bg-zinc-700">All Methods</SelectItem>
-            <SelectItem value="card"   className="text-white focus:bg-zinc-700">💳 Card</SelectItem>
-            <SelectItem value="upi"    className="text-white focus:bg-zinc-700">📱 UPI</SelectItem>
-            <SelectItem value="wallet" className="text-white focus:bg-zinc-700">👛 Wallet</SelectItem>
+          <SelectContent className="bg-canvas border-hairline rounded-md shadow-md">
+            <SelectItem value="all"    className="text-ink focus:bg-surface-soft">All Methods</SelectItem>
+            <SelectItem value="card"   className="text-ink focus:bg-surface-soft">💳 Card</SelectItem>
+            <SelectItem value="upi"    className="text-ink focus:bg-surface-soft">📱 UPI</SelectItem>
+            <SelectItem value="wallet" className="text-ink focus:bg-surface-soft">👛 Wallet</SelectItem>
           </SelectContent>
         </Select>
 
@@ -140,7 +140,7 @@ export default function Transactions() {
           <Button
             variant="ghost"
             onClick={resetFilters}
-            className="text-zinc-400 hover:text-white hover:bg-zinc-800"
+            className="text-slate hover:text-ink hover:bg-surface-soft h-10 rounded-md px-3"
           >
             Clear
           </Button>
@@ -148,7 +148,7 @@ export default function Transactions() {
       </div>
 
       {/* Table */}
-      <div className="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden">
+      <div className="bg-canvas border border-hairline rounded-[12px] overflow-hidden shadow-sm">
         {isLoading ? (
           <div className="p-4"><TableSkeleton /></div>
         ) : transactions.length === 0 ? (
@@ -168,8 +168,8 @@ export default function Transactions() {
         ) : (
           <>
             {/* Table header */}
-            <div className="grid grid-cols-12 gap-4 px-4 py-3
-                            border-b border-zinc-800 text-zinc-500 text-xs font-medium uppercase tracking-wider">
+            <div className="grid grid-cols-12 gap-4 px-6 py-3
+                            border-b border-hairline bg-surface-soft text-slate text-[11px] font-semibold uppercase tracking-widest">
               <div className="col-span-2">Amount</div>
               <div className="col-span-2">Method</div>
               <div className="col-span-2">Status</div>
@@ -179,21 +179,21 @@ export default function Transactions() {
             </div>
 
             {/* Rows */}
-            <div className="divide-y divide-zinc-800">
+            <div className="divide-y divide-hairline">
               {transactions.map((t) => (
                 <div
                   key={t._id}
-                  className="grid grid-cols-12 gap-4 px-4 py-3.5 items-center
-                             hover:bg-zinc-800/50 transition-colors"
+                  className="grid grid-cols-12 gap-4 px-6 py-4 items-center
+                             hover:bg-surface-soft transition-colors"
                 >
                   <div className="col-span-2">
-                    <span className="text-white font-semibold">
+                    <span className="text-ink font-semibold tracking-tight">
                       {formatCurrency(t.amount)}
                     </span>
                   </div>
 
                   <div className="col-span-2">
-                    <span className="text-zinc-300 text-sm">
+                    <span className="text-charcoal text-sm capitalize">
                       {METHOD_ICONS[t.method]} {t.method}
                     </span>
                   </div>
@@ -204,23 +204,23 @@ export default function Transactions() {
 
                   {isAdmin && (
                     <div className="col-span-3">
-                      <p className="text-zinc-300 text-sm truncate uppercase font-medium">
+                      <p className="text-ink text-sm truncate capitalize font-medium">
                         {t.userId?.name || '—'}
                       </p>
-                      <p className="text-zinc-500 text-xs truncate">
+                      <p className="text-stone text-xs truncate">
                         {t.userId?.email}
                       </p>
                     </div>
                   )}
 
                   <div className={isAdmin ? 'col-span-3' : 'col-span-4'}>
-                    <span className="text-zinc-400 text-sm truncate block">
+                    <span className="text-charcoal text-sm truncate block">
                       {t.description || '—'}
                     </span>
                   </div>
 
                   <div className="col-span-2 text-right">
-                    <span className="text-zinc-400 text-xs">
+                    <span className="text-slate text-[13px]">
                       {formatDate(t.createdAt)}
                     </span>
                   </div>
@@ -233,8 +233,8 @@ export default function Transactions() {
 
       {/* Pagination */}
       {pagination.pages > 1 && (
-        <div className="flex items-center justify-between">
-          <p className="text-zinc-400 text-sm">
+        <div className="flex items-center justify-between mt-4">
+          <p className="text-slate text-[13px] font-medium">
             Page {pagination.page} of {pagination.pages}
           </p>
           <div className="flex gap-2">
@@ -243,7 +243,7 @@ export default function Transactions() {
               size="sm"
               onClick={() => setPage(p => p - 1)}
               disabled={page === 1}
-              className="border-zinc-700 text-zinc-300 hover:bg-zinc-800 disabled:opacity-40"
+              className="border-hairline text-charcoal hover:bg-surface-soft disabled:opacity-40"
             >
               <ChevronLeft className="h-4 w-4" />
             </Button>
@@ -252,7 +252,7 @@ export default function Transactions() {
               size="sm"
               onClick={() => setPage(p => p + 1)}
               disabled={page === pagination.pages}
-              className="border-zinc-700 text-zinc-300 hover:bg-zinc-800 disabled:opacity-40"
+              className="border-hairline text-charcoal hover:bg-surface-soft disabled:opacity-40"
             >
               <ChevronRight className="h-4 w-4" />
             </Button>
