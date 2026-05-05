@@ -9,6 +9,7 @@ import {
 import { verifyToken } from '../middleware/auth.middleware.js'
 import { requireAdmin } from '../middleware/role.middleware.js'
 import { validate } from '../middleware/validate.middleware.js'
+import { idempotency } from '../middleware/idempotency.middleware.js'
 
 const router = Router()
 
@@ -24,7 +25,7 @@ const createValidators = [
 ]
 
 // User routes
-router.post('/',    verifyToken, createValidators, validate, createTransaction)
+router.post('/', verifyToken, createValidators, validate, idempotency, createTransaction)
 router.get('/',     verifyToken, getMyTransactions)
 router.get('/:id',  verifyToken, getTransaction)
 

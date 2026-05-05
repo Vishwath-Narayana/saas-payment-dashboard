@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
+import { v4 as uuidv4 } from 'uuid'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { transactionAPI } from '../../api/transaction.api'
 import { toast } from 'sonner'
@@ -13,19 +14,34 @@ import {
   Select, SelectContent, SelectItem,
   SelectTrigger, SelectValue
 } from '@/components/ui/select'
-import { Loader2 } from 'lucide-react'
+import { Loader2, ShieldCheck } from 'lucide-react'
 
 export default function CreatePaymentModal({ open, onClose }) {
-  const queryClient = useQueryClient()
+  const queryClient     = useQueryClient()
+  const idempotencyKey  = useRef(uuidv4())
   const [form, setForm] = useState({ amount: '', method: '', description: '' })
 
+  // New key every time modal opens to allow retrying if modal was closed/reopened
+  useEffect(() => {
+    if (open) idempotencyKey.current = uuidv4()
+  }, [open])
+
   const { mutate, isPending } = useMutation({
-    mutationFn: (data) => transactionAPI.create(data),
+    mutationFn: (data) => transactionAPI.create(data, idempotencyKey.current),
     onSuccess: (res) => {
-      const t = res.data.data.transaction
-      toast.success(`Payment ${t.status}!`, {
-        description: `₹${t.amount} via ${t.method}`
-      })
+      const t          = res.data.data.transaction
+      const idempotent = res.data.idempotent
+
+      if (idempotent) {
+        toast.info('Duplicate request detected', {
+          description: 'This payment was already processed.'
+        })
+      } else {
+        toast.success(`Payment ${t.status}!`, {
+          description: `₹${t.amount} via ${t.method}`
+        })
+      }
+
       queryClient.invalidateQueries({ queryKey: ['transactions'] })
       queryClient.invalidateQueries({ queryKey: ['analytics-summary'] })
       queryClient.invalidateQueries({ queryKey: ['analytics-daily'] })
@@ -100,7 +116,15 @@ export default function CreatePaymentModal({ open, onClose }) {
             />
           </div>
 
-          <div className="flex gap-3 pt-4">
+          {/* Idempotency indicator */}
+          <div className="flex items-center gap-2 p-3 bg-cardTint-mint/30 border border-semantic-success/20 rounded-md">
+            <ShieldCheck className="h-4 w-4 text-semantic-success shrink-0" />
+            <p className="text-semantic-success text-[13px] font-medium">
+              Protected against duplicate payments
+            </p>
+          </div>
+
+          <div className="flex gap-3 pt-2">
             <Button
               type="button"
               variant="outline"
@@ -123,5 +147,6 @@ export default function CreatePaymentModal({ open, onClose }) {
         </form>
       </DialogContent>
     </Dialog>
+
   )
 }
