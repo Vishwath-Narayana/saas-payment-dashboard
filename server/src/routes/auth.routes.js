@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { body, validationResult } from 'express-validator'
-import { signup, login, logout, getMe } from '../controllers/auth.controller.js'
+import { signup, login, logout, getMe, refresh } from '../controllers/auth.controller.js'
 import { verifyToken } from '../middleware/auth.middleware.js'
 
 const router = Router()
@@ -27,6 +27,7 @@ router.post('/login',
   login
 )
 
+router.post('/refresh', refresh)
 router.post('/logout', verifyToken, logout)
 router.get('/me', verifyToken, getMe)
 

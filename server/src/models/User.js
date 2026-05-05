@@ -12,6 +12,7 @@ const userSchema = new mongoose.Schema({
     minlength: 6, select: false   // never returned in queries by default
   },
   role: { type: String, enum: ['user', 'admin'], default: 'user' },
+  refreshToken: { type: String, select: false },
 }, { timestamps: true })
 
 // Hash before save - removed next as it is async
