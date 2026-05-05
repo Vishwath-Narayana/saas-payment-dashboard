@@ -17,6 +17,7 @@ import adminRoutes from './routes/admin.routes.js'
 import webhookRoutes from './routes/webhook.routes.js'
 import fraudRoutes from './routes/fraud.routes.js'
 import reconciliationRoutes from './routes/reconciliation.routes.js'
+import exportRoutes from './routes/export.routes.js'
 import { errorHandler } from './middleware/error.middleware.js'
 import { retryFailedWebhooks } from './services/webhook.service.js'
 import { runDailyReconciliation } from './controllers/reconciliation.controller.js'
@@ -44,6 +45,7 @@ app.use('/api/admin', adminRoutes)
 app.use('/api/webhooks', webhookRoutes)
 app.use('/api/fraud', fraudRoutes)
 app.use('/api/reconciliation', reconciliationRoutes)
+app.use('/api/export', exportRoutes)
 
 // Error handler (must be last)
 app.use(errorHandler)

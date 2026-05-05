@@ -16,8 +16,9 @@ import { formatCurrency } from '../../utils/formatCurrency'
 import { formatDate } from '../../utils/formatDate'
 import {
   Plus, Search, ArrowLeftRight,
-  ChevronLeft, ChevronRight
+  ChevronLeft, ChevronRight, Download
 } from 'lucide-react'
+import { exportAPI } from '../../api/analytics.api'
 
 const METHOD_ICONS = { card: '💳', upi: '📱', wallet: '👛' }
 
@@ -78,7 +79,19 @@ export default function Transactions() {
     <div className="space-y-4">
 
       {/* Header Actions */}
-      <div className="flex items-center justify-end">
+      <div className="flex items-center justify-end gap-2">
+        <Button
+          variant="outline"
+          onClick={() => exportAPI.transactionsCSV({
+            ...(status !== 'all' && { status }),
+            ...(method !== 'all' && { method }),
+          })}
+          className="bg-canvas hover:bg-surface border border-hairline-strong text-ink h-[36px] rounded-md px-4 font-medium shadow-sm transition-all"
+        >
+          <Download className="h-4 w-4 mr-2" />
+          Export CSV
+        </Button>
+
         {!isAdmin && (
           <Button
             onClick={() => setModalOpen(true)}
