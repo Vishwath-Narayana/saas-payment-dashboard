@@ -2,6 +2,7 @@ import Transaction from '../models/Transaction.js'
 import { sendSuccess } from '../utils/apiResponse.js'
 import { createLog } from '../utils/createLog.js'
 import { getIO } from '../config/socketInstance.js'
+import { triggerWebhooks } from '../services/webhook.service.js'
 
 // ─── CREATE ───────────────────────────────────────────────
 export const createTransaction = async (req, res) => {
@@ -33,6 +34,25 @@ export const createTransaction = async (req, res) => {
   } catch {
     // Socket not connected — non-fatal, continue
   }
+
+  // Fire webhooks async — don't await (non-blocking)
+  const eventName = `payment.${transaction.status}`
+  triggerWebhooks(req.user._id, eventName, {
+    id:          transaction._id,
+    amount:      transaction.amount,
+    status:      transaction.status,
+    method:      transaction.method,
+    description: transaction.description,
+    createdAt:   transaction.createdAt,
+  }).catch(err => console.error('[WEBHOOK] trigger error:', err.message))
+
+  triggerWebhooks(req.user._id, 'payment.created', {
+    id:          transaction._id,
+    amount:      transaction.amount,
+    status:      transaction.status,
+    method:      transaction.method,
+    createdAt:   transaction.createdAt,
+  }).catch(err => console.error('[WEBHOOK] trigger error:', err.message))
 
   sendSuccess(res, { transaction: populated }, 'Transaction created', 201)
 }

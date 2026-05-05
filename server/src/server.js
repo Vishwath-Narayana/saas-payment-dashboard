@@ -14,7 +14,9 @@ import authRoutes from './routes/auth.routes.js'
 import transactionRoutes from './routes/transaction.routes.js'
 import analyticsRoutes from './routes/analytics.routes.js'
 import adminRoutes from './routes/admin.routes.js'
+import webhookRoutes from './routes/webhook.routes.js'
 import { errorHandler } from './middleware/error.middleware.js'
+import { retryFailedWebhooks } from './services/webhook.service.js'
 
 const app = express()
 const httpServer = createServer(app)
@@ -36,6 +38,7 @@ app.use('/api/auth', authRoutes)
 app.use('/api/transactions', transactionRoutes)
 app.use('/api/analytics', analyticsRoutes)
 app.use('/api/admin', adminRoutes)
+app.use('/api/webhooks', webhookRoutes)
 
 // Error handler (must be last)
 app.use(errorHandler)
@@ -47,6 +50,10 @@ connectDB()
     httpServer.listen(process.env.PORT || 5001, () =>
       console.log(`Server running on port ${process.env.PORT || 5001}`)
     )
+
+    // Retry failed webhooks every 5 minutes
+    setInterval(retryFailedWebhooks, 5 * 60 * 1000)
+    console.log('Webhook retry worker started')
   })
   .catch((err) => {
     console.error('STARTUP ERROR:', err.message)
