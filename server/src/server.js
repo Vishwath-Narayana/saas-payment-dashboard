@@ -16,8 +16,10 @@ import analyticsRoutes from './routes/analytics.routes.js'
 import adminRoutes from './routes/admin.routes.js'
 import webhookRoutes from './routes/webhook.routes.js'
 import fraudRoutes from './routes/fraud.routes.js'
+import reconciliationRoutes from './routes/reconciliation.routes.js'
 import { errorHandler } from './middleware/error.middleware.js'
 import { retryFailedWebhooks } from './services/webhook.service.js'
+import { runDailyReconciliation } from './controllers/reconciliation.controller.js'
 
 const app = express()
 const httpServer = createServer(app)
@@ -41,6 +43,7 @@ app.use('/api/analytics', analyticsRoutes)
 app.use('/api/admin', adminRoutes)
 app.use('/api/webhooks', webhookRoutes)
 app.use('/api/fraud', fraudRoutes)
+app.use('/api/reconciliation', reconciliationRoutes)
 
 // Error handler (must be last)
 app.use(errorHandler)
@@ -55,7 +58,20 @@ connectDB()
 
     // Retry failed webhooks every 5 minutes
     setInterval(retryFailedWebhooks, 5 * 60 * 1000)
-    console.log('Webhook retry worker started')
+
+    // Run reconciliation at midnight every day
+    const scheduleDaily = () => {
+      const now = new Date()
+      const midnight = new Date()
+      midnight.setHours(24, 0, 0, 0)
+      const msUntilMidnight = midnight - now
+      setTimeout(() => {
+        runDailyReconciliation()
+        setInterval(runDailyReconciliation, 24 * 60 * 60 * 1000)
+      }, msUntilMidnight)
+    }
+    scheduleDaily()
+    console.log('Daily reconciliation scheduler started')
   })
   .catch((err) => {
     console.error('STARTUP ERROR:', err.message)
