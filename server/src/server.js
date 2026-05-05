@@ -15,6 +15,7 @@ import transactionRoutes from './routes/transaction.routes.js'
 import analyticsRoutes from './routes/analytics.routes.js'
 import adminRoutes from './routes/admin.routes.js'
 import webhookRoutes from './routes/webhook.routes.js'
+import fraudRoutes from './routes/fraud.routes.js'
 import { errorHandler } from './middleware/error.middleware.js'
 import { retryFailedWebhooks } from './services/webhook.service.js'
 
@@ -39,6 +40,7 @@ app.use('/api/transactions', transactionRoutes)
 app.use('/api/analytics', analyticsRoutes)
 app.use('/api/admin', adminRoutes)
 app.use('/api/webhooks', webhookRoutes)
+app.use('/api/fraud', fraudRoutes)
 
 // Error handler (must be last)
 app.use(errorHandler)

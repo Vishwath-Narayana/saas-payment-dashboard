@@ -3,17 +3,35 @@ import { sendSuccess } from '../utils/apiResponse.js'
 import { createLog } from '../utils/createLog.js'
 import { getIO } from '../config/socketInstance.js'
 import { triggerWebhooks } from '../services/webhook.service.js'
+import { assessFraudRisk } from '../services/fraud.service.js'
 
 // ─── CREATE ───────────────────────────────────────────────
 export const createTransaction = async (req, res) => {
   const { amount, method, description } = req.body
+
+  // ─── Run fraud assessment BEFORE creating ─────────────
+  const { riskScore, riskLevel, riskFlags, fraudStatus } =
+    await assessFraudRisk({ userId: req.user._id, amount, method })
+
+  // Block high-risk transactions immediately
+  if (fraudStatus === 'blocked') {
+    return res.status(403).json({
+      success: false,
+      error:   'Transaction blocked due to high fraud risk',
+      risk: { score: riskScore, level: riskLevel, flags: riskFlags }
+    })
+  }
 
   const transaction = await Transaction.create({
     userId: req.user._id,
     amount,
     method,
     description,
-    status: Transaction.randomStatus()
+    status: Transaction.randomStatus(),
+    riskScore,
+    riskLevel,
+    riskFlags,
+    fraudStatus,
   })
 
   const populated = await transaction.populate('userId', 'name email')
@@ -23,7 +41,7 @@ export const createTransaction = async (req, res) => {
     userName: req.user.name,
     userEmail: req.user.email,
     action: 'PAYMENT_CREATED',
-    metadata: { amount, method, status: transaction.status, transactionId: transaction._id }
+    metadata: { amount, method, status: transaction.status, riskLevel, riskScore, transactionId: transaction._id }
   })
 
   try {
@@ -31,6 +49,15 @@ export const createTransaction = async (req, res) => {
     io.to(`user:${req.user._id}`).emit('new_transaction', populated)
     io.to('admin').emit('new_transaction', populated)
     io.to('admin').emit('stats_updated')
+
+    if (fraudStatus === 'flagged') {
+      io.to('admin').emit('fraud_alert', {
+        transaction: populated,
+        riskScore,
+        riskLevel,
+        riskFlags
+      })
+    }
   } catch {
     // Socket not connected — non-fatal, continue
   }
@@ -42,6 +69,7 @@ export const createTransaction = async (req, res) => {
     amount:      transaction.amount,
     status:      transaction.status,
     method:      transaction.method,
+    riskLevel:   transaction.riskLevel,
     description: transaction.description,
     createdAt:   transaction.createdAt,
   }).catch(err => console.error('[WEBHOOK] trigger error:', err.message))
@@ -51,6 +79,7 @@ export const createTransaction = async (req, res) => {
     amount:      transaction.amount,
     status:      transaction.status,
     method:      transaction.method,
+    riskLevel:   transaction.riskLevel,
     createdAt:   transaction.createdAt,
   }).catch(err => console.error('[WEBHOOK] trigger error:', err.message))
 

@@ -17,14 +17,26 @@ const transactionSchema = new mongoose.Schema({
     required: true
   },
   description: { type: String, trim: true, maxlength: 200 },
+
+  // ─── Fraud Detection Fields ───────────────────────────
+  riskScore:   { type: Number, default: 0, min: 0, max: 100 },
+  riskLevel:   { type: String, enum: ['low', 'medium', 'high'], default: 'low' },
+  riskFlags:   [{ type: String }],   // list of triggered rules
+  fraudStatus: {
+    type: String,
+    enum: ['clear', 'flagged', 'blocked', 'approved', 'rejected'],
+    default: 'clear'
+  },
+  reviewedBy:  { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  reviewedAt:  { type: Date },
+  reviewNote:  { type: String },
 }, { timestamps: true })
 
-// Compound index — userId + createdAt covers 90% of queries
 transactionSchema.index({ userId: 1, createdAt: -1 })
-// Status index — for filter queries
 transactionSchema.index({ status: 1 })
-// Admin "all transactions" sorted by date
 transactionSchema.index({ createdAt: -1 })
+transactionSchema.index({ fraudStatus: 1 })
+transactionSchema.index({ riskLevel: 1 })
 
 // Static: random status simulation
 transactionSchema.statics.randomStatus = function () {
