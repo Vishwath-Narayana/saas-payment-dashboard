@@ -5,9 +5,9 @@ import {
 import { formatCurrency } from '../../utils/formatCurrency'
 
 const COLORS = {
-  card:   '#5645d4', // primary
-  upi:    '#1aae39', // brand-green
-  wallet: '#ff64c8', // brand-pink
+  card:   '#7b3ff2', // primary
+  upi:    '#2a9d99', // teal
+  wallet: '#ff64c8', // pink
 }
 
 const CustomTooltip = ({ active, payload }) => {
@@ -34,8 +34,8 @@ export default function MethodPieChart({ data = [] }) {
           <p className="text-stone text-sm">No data yet</p>
         </div>
       ) : (
-        <div className="flex-1 min-h-[260px]">
-          <ResponsiveContainer width="100%" height="100%">
+        <div className="flex-1">
+          <ResponsiveContainer width="100%" height={300}>
             <PieChart>
               <Pie
                 data={data}
@@ -51,7 +51,7 @@ export default function MethodPieChart({ data = [] }) {
                 {data.map((entry) => (
                   <Cell
                     key={entry.method}
-                    fill={COLORS[entry.method] || '#5645d4'}
+                    fill={COLORS[entry.method] || '#7b3ff2'}
                   />
                 ))}
               </Pie>

@@ -38,23 +38,23 @@ export default function Login() {
 
         {/* Logo */}
         <div className="flex flex-col items-center gap-2">
-          <div className="p-2 bg-primary rounded-[8px] shadow-sm">
-            <CreditCard className="h-6 w-6 text-onPrimary" />
+          <div className="p-2 bg-canvas border border-hairline-strong rounded-md shadow-sm">
+            <CreditCard className="h-6 w-6 text-ink" />
           </div>
-          <h1 className="text-[28px] font-semibold text-ink tracking-tight">PayDash</h1>
-          <p className="text-slate text-sm">Payment Analytics Platform</p>
+          <h1 className="text-[32px] font-bold text-ink tracking-tight">PayDash</h1>
+          <p className="text-slate text-sm font-medium">Payment Analytics Platform</p>
         </div>
 
-        <Card className="bg-canvas border-hairline shadow-sm rounded-[12px]">
-          <CardHeader className="space-y-1">
-            <CardTitle className="text-xl text-ink tracking-tight font-semibold">Welcome back</CardTitle>
-            <CardDescription className="text-slate">
+        <Card className="bg-canvas border-hairline shadow-sm rounded-lg overflow-hidden">
+          <CardHeader className="space-y-1 pb-4">
+            <CardTitle className="text-[24px] text-ink tracking-tight font-bold">Welcome back</CardTitle>
+            <CardDescription className="text-slate text-[15px]">
               Sign in to your account
             </CardDescription>
           </CardHeader>
 
-          <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4">
+          <CardContent className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-5">
 
               {/* Error */}
               {error && (
@@ -65,7 +65,7 @@ export default function Login() {
               )}
 
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-charcoal font-medium">Email</Label>
+                <Label htmlFor="email" className="text-ink font-medium text-[14px]">Email</Label>
                 <Input
                   id="email"
                   name="email"
@@ -74,13 +74,13 @@ export default function Login() {
                   value={form.email}
                   onChange={handleChange}
                   required
-                  className="bg-canvas border-hairline-strong text-ink placeholder:text-stone
-                             focus-visible:border-primary focus-visible:ring-primary rounded-md h-[44px]"
+                  className="bg-canvas border-hairline-strong text-ink placeholder:text-stone/60
+                             focus-visible:border-primary focus-visible:ring-0 rounded-md h-[44px] transition-all"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="password" className="text-charcoal font-medium">Password</Label>
+                <Label htmlFor="password" className="text-ink font-medium text-[14px]">Password</Label>
                 <Input
                   id="password"
                   name="password"
@@ -89,15 +89,15 @@ export default function Login() {
                   value={form.password}
                   onChange={handleChange}
                   required
-                  className="bg-canvas border-hairline-strong text-ink placeholder:text-stone
-                             focus-visible:border-primary focus-visible:ring-primary rounded-md h-[44px]"
+                  className="bg-canvas border-hairline-strong text-ink placeholder:text-stone/60
+                             focus-visible:border-primary focus-visible:ring-0 rounded-md h-[44px] transition-all"
                 />
               </div>
 
               <Button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-primary hover:bg-primary-pressed text-onPrimary h-[44px] rounded-[8px] font-medium"
+                className="w-full bg-canvas hover:bg-surface border border-hairline-strong text-ink h-[44px] rounded-md font-bold text-[15px] shadow-sm transition-all"
               >
                 {loading
                   ? <><Loader2 className="h-4 w-4 mr-2 animate-spin" />Signing in...</>
@@ -108,15 +108,17 @@ export default function Login() {
             </form>
 
             {/* Quick login hints for demo */}
-            <div className="mt-4 p-3 bg-surface border border-hairline rounded-[8px] space-y-1">
-              <p className="text-stone text-[11px] font-semibold uppercase tracking-widest mb-2">Demo accounts</p>
-              <p className="text-slate text-xs font-medium">Admin: admin@example.com / 123456</p>
-              <p className="text-slate text-xs font-medium">User: arjun@example.com / 123456</p>
+            <div className="mt-6 p-4 bg-surface-soft border border-hairline rounded-md space-y-2">
+              <p className="text-stone text-[11px] font-bold uppercase tracking-[0.1em]">Demo accounts</p>
+              <div className="space-y-1">
+                <p className="text-charcoal text-[13px] font-medium">Admin: <span className="text-ink font-semibold">admin@example.com / 123456</span></p>
+                <p className="text-charcoal text-[13px] font-medium">User: <span className="text-ink font-semibold">arjun@example.com / 123456</span></p>
+              </div>
             </div>
 
-            <p className="mt-6 text-center text-sm text-slate">
+            <p className="mt-8 text-center text-[14px] text-charcoal font-medium">
               No account?{' '}
-              <Link to="/signup" className="text-link hover:text-link-pressed font-medium">
+              <Link to="/signup" className="text-ink hover:underline font-bold">
                 Sign up
               </Link>
             </p>

@@ -32,7 +32,7 @@ export default function Sidebar() {
       {/* Logo */}
       <div className="p-4 border-b border-hairline-soft">
         <div className="flex items-center gap-3">
-          <div className="p-1.5 bg-primary text-onPrimary rounded-md shadow-sm">
+          <div className="p-1.5 bg-canvas border border-hairline-strong text-ink rounded-md shadow-sm">
             <CreditCard className="h-5 w-5" />
           </div>
           <span className="text-ink font-semibold text-base tracking-tight">PayDash</span>
@@ -44,7 +44,7 @@ export default function Sidebar() {
 
         {/* User nav */}
         <p className="text-stone text-[11px] font-semibold uppercase tracking-widest px-3 mb-1 mt-2">
-          Main
+          MAIN
         </p>
         {navItems.map(({ to, icon: Icon, label }) => (
           <NavLink

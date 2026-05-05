@@ -29,15 +29,7 @@ export default function AdminUsers() {
   return (
     <div className="space-y-4">
 
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-ink text-2xl font-semibold tracking-tight">Users</h2>
-          <p className="text-slate text-sm mt-0.5">
-            {pagination.total ? `${pagination.total} registered users` : 'All accounts'}
-          </p>
-        </div>
-      </div>
+      {/* Header removed as it's in Navbar */}
 
       {/* Search */}
       <div className="relative max-w-sm">

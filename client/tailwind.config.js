@@ -16,9 +16,9 @@ export default {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "#5645d4",
-          pressed: "#4534b3",
-          deep: "#3a2a99",
+          DEFAULT: "#7b3ff2",
+          pressed: "#6b2ae3",
+          deep: "#5a1ad1",
           foreground: "#ffffff",
         },
         secondary: {
@@ -107,13 +107,14 @@ export default {
         },
       },
       borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+        lg: "12px",
+        md: "8px",
+        sm: "6px",
         xs: "4px",
         xl: "16px",
         xxl: "20px",
         xxxl: "24px",
+        full: "9999px",
       },
       spacing: {
         xxs: "4px",

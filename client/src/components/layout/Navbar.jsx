@@ -41,8 +41,8 @@ export default function Navbar({ notifCount = 0 }) {
 
         {/* User chip */}
         <div className="flex items-center gap-2 px-2.5 py-1.5 bg-surface-soft border border-hairline rounded-md hover:bg-surface transition-colors cursor-pointer">
-          <div className="h-5 w-5 rounded-sm bg-brand-pink border border-hairline flex items-center justify-center">
-            <span className="text-onPrimary text-[10px] font-bold">
+          <div className="h-5 w-5 rounded-sm bg-brand-lavender border border-hairline-strong flex items-center justify-center">
+            <span className="text-brand-purple800 text-[10px] font-bold">
               {user?.name?.[0]?.toUpperCase()}
             </span>
           </div>

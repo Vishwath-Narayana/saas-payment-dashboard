@@ -77,21 +77,12 @@ export default function Transactions() {
   return (
     <div className="space-y-4">
 
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-ink text-2xl font-semibold tracking-tight">Transactions</h2>
-          <p className="text-slate text-sm mt-0.5">
-            {pagination.total
-              ? `${pagination.total} total transactions`
-              : 'Your payment history'
-            }
-          </p>
-        </div>
+      {/* Header Actions */}
+      <div className="flex items-center justify-end">
         {!isAdmin && (
           <Button
             onClick={() => setModalOpen(true)}
-            className="bg-primary hover:bg-primary-pressed text-onPrimary h-[36px] rounded-md px-4 font-medium"
+            className="bg-canvas hover:bg-surface border border-hairline-strong text-ink h-[36px] rounded-md px-4 font-medium shadow-sm transition-all"
           >
             <Plus className="h-4 w-4 mr-2" />
             New Payment

@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { adminAPI } from '../../api/admin.api'
 import { analyticsAPI } from '../../api/analytics.api'
 import StatCard, { StatCardSkeleton } from '../../components/ui/StatCard'
+import RevenueChart from '../../components/charts/RevenueChart'
 import { formatCurrency } from '../../utils/formatCurrency'
 import { formatDate } from '../../utils/formatDate'
 import { Users, ArrowLeftRight, DollarSign, Activity } from 'lucide-react'
@@ -20,7 +21,12 @@ export default function Admin() {
     queryFn:  () => analyticsAPI.summary().then(r => r.data.data),
   })
 
-  const loading = loadingOverview || loadingSummary
+  const { data: daily, isLoading: loadingDaily } = useQuery({
+    queryKey: ['analytics-daily'],
+    queryFn:  () => analyticsAPI.daily(30).then(r => r.data.data.daily),
+  })
+
+  const loading = loadingOverview || loadingSummary || loadingDaily
 
   return (
     <div className="space-y-6">
@@ -62,6 +68,18 @@ export default function Admin() {
               iconBg="bg-cardTint-yellow"
             />
           </>
+        )}
+      </div>
+
+      {/* Analytics Chart */}
+      <div className="bg-canvas border border-hairline rounded-[12px] overflow-hidden shadow-sm">
+        {loadingDaily ? (
+          <div className="p-6 animate-pulse">
+            <div className="h-4 w-32 bg-surface-soft rounded-md mb-1" />
+            <div className="h-64 bg-surface-soft rounded-md" />
+          </div>
+        ) : (
+          <RevenueChart data={daily || []} />
         )}
       </div>
 

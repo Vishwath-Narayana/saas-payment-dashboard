@@ -45,15 +45,8 @@ export default function AdminLogs() {
   return (
     <div className="space-y-4">
 
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-ink text-2xl font-semibold tracking-tight">Activity Logs</h2>
-          <p className="text-slate text-sm mt-0.5">
-            {pagination.total ? `${pagination.total} total events` : 'System activity'}
-          </p>
-        </div>
-
+      {/* Header Actions */}
+      <div className="flex items-center justify-end">
         <Select value={action} onValueChange={v => { setAction(v); setPage(1) }}>
           <SelectTrigger className="w-44 h-10 bg-canvas border-hairline-strong text-ink rounded-md">
             <SelectValue placeholder="Filter action" />

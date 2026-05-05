@@ -39,23 +39,23 @@ export default function Signup() {
       <div className="w-full max-w-md space-y-6">
 
         <div className="flex flex-col items-center gap-2">
-          <div className="p-2 bg-primary rounded-[8px] shadow-sm">
-            <CreditCard className="h-6 w-6 text-onPrimary" />
+          <div className="p-2 bg-canvas border border-hairline-strong rounded-md shadow-sm">
+            <CreditCard className="h-6 w-6 text-ink" />
           </div>
-          <h1 className="text-[28px] font-semibold text-ink tracking-tight">PayDash</h1>
-          <p className="text-slate text-sm">Payment Analytics Platform</p>
+          <h1 className="text-[32px] font-bold text-ink tracking-tight">PayDash</h1>
+          <p className="text-slate text-sm font-medium">Payment Analytics Platform</p>
         </div>
 
-        <Card className="bg-canvas border-hairline shadow-sm rounded-[12px]">
-          <CardHeader className="space-y-1">
-            <CardTitle className="text-xl text-ink tracking-tight font-semibold">Create account</CardTitle>
-            <CardDescription className="text-slate">
+        <Card className="bg-canvas border-hairline shadow-sm rounded-lg overflow-hidden">
+          <CardHeader className="space-y-1 pb-4">
+            <CardTitle className="text-[24px] text-ink tracking-tight font-bold">Create account</CardTitle>
+            <CardDescription className="text-slate text-[15px]">
               Start tracking your payments
             </CardDescription>
           </CardHeader>
 
-          <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4">
+          <CardContent className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-5">
 
               {error && (
                 <div className="flex items-center gap-2 p-3 bg-cardTint-rose border border-semantic-error/20 rounded-md">
@@ -65,7 +65,7 @@ export default function Signup() {
               )}
 
               <div className="space-y-2">
-                <Label htmlFor="name" className="text-charcoal font-medium">Full name</Label>
+                <Label htmlFor="name" className="text-ink font-medium text-[14px]">Full name</Label>
                 <Input
                   id="name"
                   name="name"
@@ -73,13 +73,13 @@ export default function Signup() {
                   value={form.name}
                   onChange={handleChange}
                   required
-                  className="bg-canvas border-hairline-strong text-ink placeholder:text-stone
-                             focus-visible:border-primary focus-visible:ring-primary rounded-md h-[44px]"
+                  className="bg-canvas border-hairline-strong text-ink placeholder:text-stone/60
+                             focus-visible:border-primary focus-visible:ring-0 rounded-md h-[44px] transition-all"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-charcoal font-medium">Email</Label>
+                <Label htmlFor="email" className="text-ink font-medium text-[14px]">Email</Label>
                 <Input
                   id="email"
                   name="email"
@@ -88,13 +88,13 @@ export default function Signup() {
                   value={form.email}
                   onChange={handleChange}
                   required
-                  className="bg-canvas border-hairline-strong text-ink placeholder:text-stone
-                             focus-visible:border-primary focus-visible:ring-primary rounded-md h-[44px]"
+                  className="bg-canvas border-hairline-strong text-ink placeholder:text-stone/60
+                             focus-visible:border-primary focus-visible:ring-0 rounded-md h-[44px] transition-all"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="password" className="text-charcoal font-medium">Password</Label>
+                <Label htmlFor="password" className="text-ink font-medium text-[14px]">Password</Label>
                 <Input
                   id="password"
                   name="password"
@@ -104,15 +104,15 @@ export default function Signup() {
                   onChange={handleChange}
                   required
                   minLength={6}
-                  className="bg-canvas border-hairline-strong text-ink placeholder:text-stone
-                             focus-visible:border-primary focus-visible:ring-primary rounded-md h-[44px]"
+                  className="bg-canvas border-hairline-strong text-ink placeholder:text-stone/60
+                             focus-visible:border-primary focus-visible:ring-0 rounded-md h-[44px] transition-all"
                 />
               </div>
 
               <Button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-primary hover:bg-primary-pressed text-onPrimary h-[44px] rounded-[8px] font-medium"
+                className="w-full bg-canvas hover:bg-surface border border-hairline-strong text-ink h-[44px] rounded-md font-bold text-[15px] shadow-sm transition-all"
               >
                 {loading
                   ? <><Loader2 className="h-4 w-4 mr-2 animate-spin" />Creating account...</>
@@ -122,9 +122,9 @@ export default function Signup() {
 
             </form>
 
-            <p className="mt-6 text-center text-sm text-slate">
+            <p className="mt-8 text-center text-[14px] text-charcoal font-medium">
               Already have an account?{' '}
-              <Link to="/login" className="text-link hover:text-link-pressed font-medium">
+              <Link to="/login" className="text-ink hover:underline font-bold">
                 Sign in
               </Link>
             </p>

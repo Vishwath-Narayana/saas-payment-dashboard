@@ -29,8 +29,8 @@ export default function MonthlyChart({ data = [] }) {
           <p className="text-stone text-sm">No data yet</p>
         </div>
       ) : (
-        <div className="flex-1 min-h-[260px]">
-          <ResponsiveContainer width="100%" height="100%">
+        <div className="flex-1">
+          <ResponsiveContainer width="100%" height={260}>
             <BarChart data={data} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#e5e3df" vertical={false} />
               <XAxis
