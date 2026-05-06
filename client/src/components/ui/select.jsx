@@ -3,6 +3,8 @@
 import * as React from "react"
 import * as SelectPrimitive from "@radix-ui/react-select"
 import { Check, ChevronDown, ChevronUp } from "lucide-react"
+import { useSound } from "@/hooks/use-sound"
+import { clickSoftSound } from "@/sounds/click-soft"
 
 import { cn } from "@/lib/utils"
 
@@ -12,20 +14,30 @@ const SelectGroup = SelectPrimitive.Group
 
 const SelectValue = SelectPrimitive.Value
 
-const SelectTrigger = React.forwardRef(({ className, children, ...props }, ref) => (
-  <SelectPrimitive.Trigger
-    ref={ref}
-    className={cn(
-      "flex h-11 w-full items-center justify-between rounded-md border border-input bg-white !bg-white px-3 py-2 text-sm ring-offset-background transition-[transform,colors,border-color] duration-150 ease-[var(--ease-out)] data-[placeholder]:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-[#1a1a1a] focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50 active:scale-[0.98] [&>span]:line-clamp-1",
-      className
-    )}
-    {...props}>
+const SelectTrigger = React.forwardRef(({ className, children, onClick, ...props }, ref) => {
+  const [play] = useSound(clickSoftSound, { volume: 0.15 });
+
+  const handleClick = (e) => {
+    play();
+    if (onClick) onClick(e);
+  };
+
+  return (
+    <SelectPrimitive.Trigger
+      ref={ref}
+      className={cn(
+        "flex h-11 w-full items-center justify-between rounded-md border border-input bg-white !bg-white px-3 py-2 text-sm ring-offset-background transition-[transform,colors,border-color] duration-150 ease-[var(--ease-out)] data-[placeholder]:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-[#1a1a1a] focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50 active:scale-[0.98] [&>span]:line-clamp-1",
+        className
+      )}
+      onClick={handleClick}
+      {...props}>
     {children}
     <SelectPrimitive.Icon asChild>
       <ChevronDown className="h-4 w-4 opacity-50" />
     </SelectPrimitive.Icon>
-  </SelectPrimitive.Trigger>
-))
+    </SelectPrimitive.Trigger>
+  );
+})
 SelectTrigger.displayName = SelectPrimitive.Trigger.displayName
 
 const SelectScrollUpButton = React.forwardRef(({ className, ...props }, ref) => (

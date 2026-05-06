@@ -5,6 +5,8 @@ import {
   Users, FileText, CreditCard, LogOut
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { useSound } from '@/hooks/use-sound'
+import { clickSoftSound } from '@/sounds/click-soft'
 
 const navItems = [
   { to: '/dashboard',    icon: LayoutDashboard, label: 'Dashboard',    role: 'user' },
@@ -20,8 +22,10 @@ const adminItems = [
 export default function Sidebar() {
   const { user, logout } = useAuth()
   const navigate = useNavigate()
+  const [play] = useSound(clickSoftSound, { volume: 0.15 });
 
   const handleLogout = async () => {
+    play()
     await logout()
     navigate('/login')
   }
@@ -50,6 +54,7 @@ export default function Sidebar() {
           <NavLink
             key={to}
             to={to}
+            onClick={play}
             className={({ isActive }) => cn(
               'flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-[transform,colors] duration-200 ease-[var(--ease-out)] active:scale-[0.98]',
               isActive
@@ -73,6 +78,7 @@ export default function Sidebar() {
                 key={to}
                 to={to}
                 end={to === '/admin'}
+                onClick={play}
                 className={({ isActive }) => cn(
                   'flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-[transform,colors] duration-200 ease-[var(--ease-out)] active:scale-[0.98]',
                   isActive

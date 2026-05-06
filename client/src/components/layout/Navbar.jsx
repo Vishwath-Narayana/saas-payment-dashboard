@@ -1,6 +1,8 @@
 import { useLocation } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import { Bell } from 'lucide-react'
+import { useSound } from '@/hooks/use-sound'
+import { clickSoftSound } from '@/sounds/click-soft'
 
 const pageTitles = {
   '/dashboard':    { title: 'Dashboard',     subtitle: 'Overview of your payments' },
@@ -13,6 +15,7 @@ const pageTitles = {
 export default function Navbar({ notifCount = 0 }) {
   const { pathname } = useLocation()
   const { user } = useAuth()
+  const [play] = useSound(clickSoftSound, { volume: 0.15 });
   const page = pageTitles[pathname] || { title: 'PayDash', subtitle: '' }
 
   return (
@@ -28,7 +31,10 @@ export default function Navbar({ notifCount = 0 }) {
       <div className="flex items-center gap-4">
         {/* Notification bell */}
         <div className="relative">
-          <button className="p-2 rounded-md text-slate hover:text-ink hover:bg-surface-soft transition-colors border border-transparent hover:border-hairline">
+          <button 
+            onClick={play}
+            className="p-2 rounded-md text-slate hover:text-ink hover:bg-surface-soft transition-colors border border-transparent hover:border-hairline"
+          >
             <Bell className="h-5 w-5" />
           </button>
           {notifCount > 0 && (
@@ -40,7 +46,10 @@ export default function Navbar({ notifCount = 0 }) {
         </div>
 
         {/* User chip */}
-        <div className="flex items-center gap-2 px-2.5 py-1.5 bg-surface-soft border border-hairline rounded-md hover:bg-surface transition-colors cursor-pointer">
+        <div 
+          onClick={play}
+          className="flex items-center gap-2 px-2.5 py-1.5 bg-surface-soft border border-hairline rounded-md hover:bg-surface transition-colors cursor-pointer"
+        >
           <div className="h-5 w-5 rounded-sm bg-[#f0eeec] border border-hairline-strong flex items-center justify-center">
             <span className="text-[#37352f] text-[10px] font-bold">
               {user?.name?.[0]?.toUpperCase()}
