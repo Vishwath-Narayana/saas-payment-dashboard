@@ -76,15 +76,16 @@ export default function AdminUsers() {
 
             {/* Rows */}
             <div className="divide-y divide-hairline">
-              {users.map(user => (
+              {users.map((user, index) => (
                 <div key={user._id}
                   className="grid grid-cols-12 gap-4 px-6 py-4 items-center
-                             hover:bg-surface-soft transition-colors"
+                             hover:bg-surface-soft transition-colors animate-slide-up-fade opacity-0"
+                  style={{ animationDelay: `${index * 40}ms` }}
                 >
                   <div className="col-span-5 flex items-center gap-3">
-                    <div className="h-8 w-8 rounded-full bg-brand-lavender border border-hairline-strong flex items-center
+                    <div className="h-8 w-8 rounded-full bg-[#f0eeec] border border-hairline-strong flex items-center
                                     justify-center shrink-0">
-                      <span className="text-brand-purple800 text-sm font-semibold">
+                      <span className="text-[#37352f] text-sm font-semibold">
                         {user.name?.[0]?.toUpperCase()}
                       </span>
                     </div>

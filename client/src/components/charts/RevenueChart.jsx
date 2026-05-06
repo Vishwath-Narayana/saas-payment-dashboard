@@ -31,21 +31,21 @@ export default function RevenueChart({ data = [] }) {
           <AreaChart data={data} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
             <defs>
               <linearGradient id="revenueGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%"  stopColor="#7b3ff2" stopOpacity={0.15} />
-                <stop offset="95%" stopColor="#7b3ff2" stopOpacity={0} />
+                <stop offset="5%"  stopColor="#2a9d99" stopOpacity={0.12} />
+                <stop offset="95%" stopColor="#2a9d99" stopOpacity={0} />
               </linearGradient>
             </defs>
-            <CartesianGrid strokeDasharray="3 3" stroke="#e5e3df" vertical={false} />
+            <CartesianGrid strokeDasharray="3 3" stroke="#f0eeec" vertical={false} />
             <XAxis
               dataKey="date"
-              tick={{ fill: '#a4a097', fontSize: 11, fontWeight: 500 }}
+              tick={{ fill: '#787671', fontSize: 11, fontWeight: 500 }}
               tickLine={false}
               axisLine={false}
               tickFormatter={(v) => v.slice(5)}  // show MM-DD only
               dy={10}
             />
             <YAxis
-              tick={{ fill: '#a4a097', fontSize: 11, fontWeight: 500 }}
+              tick={{ fill: '#787671', fontSize: 11, fontWeight: 500 }}
               tickLine={false}
               axisLine={false}
               tickFormatter={(v) => `₹${(v/1000).toFixed(0)}k`}
@@ -55,11 +55,11 @@ export default function RevenueChart({ data = [] }) {
             <Area
               type="monotone"
               dataKey="revenue"
-              stroke="#7b3ff2"
-              strokeWidth={2}
+              stroke="#2a9d99"
+              strokeWidth={1.5}
               dot={false}
               fill="url(#revenueGrad)"
-              activeDot={{ r: 4, strokeWidth: 0, fill: '#7b3ff2' }}
+              activeDot={{ r: 4, strokeWidth: 2, stroke: '#ffffff', fill: '#2a9d99' }}
             />
           </AreaChart>
         </ResponsiveContainer>

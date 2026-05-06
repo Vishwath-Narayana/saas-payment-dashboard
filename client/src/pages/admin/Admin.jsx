@@ -40,8 +40,10 @@ export default function Admin() {
               value={overview?.totalUsers || 0}
               subtitle="Registered accounts"
               icon={Users}
-              iconColor="text-brand-purple"
-              iconBg="bg-cardTint-lavender"
+              iconColor="text-[#0a1530]"
+              iconBg="bg-[#dcecfa]"
+              className="animate-slide-up-fade opacity-0"
+              style={{ animationDelay: '0ms' }}
             />
             <StatCard
               title="Total Transactions"
@@ -50,6 +52,8 @@ export default function Admin() {
               icon={ArrowLeftRight}
               iconColor="text-brand-teal"
               iconBg="bg-cardTint-sky"
+              className="animate-slide-up-fade opacity-0"
+              style={{ animationDelay: '50ms' }}
             />
             <StatCard
               title="Total Revenue"
@@ -58,6 +62,8 @@ export default function Admin() {
               icon={DollarSign}
               iconColor="text-semantic-success"
               iconBg="bg-cardTint-mint"
+              className="animate-slide-up-fade opacity-0"
+              style={{ animationDelay: '100ms' }}
             />
             <StatCard
               title="Success Rate"
@@ -66,6 +72,8 @@ export default function Admin() {
               icon={Activity}
               iconColor="text-brand-orange"
               iconBg="bg-cardTint-yellow"
+              className="animate-slide-up-fade opacity-0"
+              style={{ animationDelay: '150ms' }}
             />
           </>
         )}
@@ -115,10 +123,12 @@ export default function Admin() {
               No activity yet
             </div>
           ) : (
-            overview?.recentLogs?.map((log) => (
-              <div key={log._id} className="px-6 py-4 flex items-center gap-4 hover:bg-surface-soft transition-colors cursor-pointer">
-                <div className="h-8 w-8 rounded-full bg-brand-lavender border border-hairline-strong flex items-center justify-center shrink-0">
-                  <span className="text-brand-purple800 text-xs font-bold">
+            overview?.recentLogs?.map((log, index) => (
+              <div key={log._id} className="px-6 py-4 flex items-center gap-4 hover:bg-surface-soft transition-colors cursor-pointer animate-slide-up-fade opacity-0"
+                style={{ animationDelay: `${200 + index * 40}ms` }}
+              >
+                <div className="h-8 w-8 rounded-full bg-[#fde0ec] border border-hairline-strong flex items-center justify-center shrink-0">
+                  <span className="text-[#a02e6d] text-xs font-bold">
                     {log.userName?.[0]?.toUpperCase() || '?'}
                   </span>
                 </div>
@@ -127,7 +137,7 @@ export default function Admin() {
                     <span className="text-ink font-semibold">{log.userName}</span>
                     {' '}{actionLabel(log.action)}
                     {log.metadata?.amount && (
-                      <span className="text-brand-purple font-medium"> ₹{log.metadata.amount}</span>
+                      <span className="text-[#dd5b00] font-medium"> ₹{log.metadata.amount}</span>
                     )}
                   </p>
                   <p className="text-slate text-[13px] mt-0.5">{log.userEmail}</p>

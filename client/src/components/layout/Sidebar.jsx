@@ -51,7 +51,7 @@ export default function Sidebar() {
             key={to}
             to={to}
             className={({ isActive }) => cn(
-              'flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors',
+              'flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-[transform,colors] duration-200 ease-[var(--ease-out)] active:scale-[0.98]',
               isActive
                 ? 'bg-surface-soft text-ink font-semibold'
                 : 'text-slate hover:bg-surface-soft hover:text-ink'
@@ -74,7 +74,7 @@ export default function Sidebar() {
                 to={to}
                 end={to === '/admin'}
                 className={({ isActive }) => cn(
-                  'flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors',
+                  'flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-[transform,colors] duration-200 ease-[var(--ease-out)] active:scale-[0.98]',
                   isActive
                     ? 'bg-surface-soft text-ink font-semibold'
                     : 'text-slate hover:bg-surface-soft hover:text-ink'
@@ -91,8 +91,8 @@ export default function Sidebar() {
       {/* User info + logout */}
       <div className="p-3 border-t border-hairline-soft">
         <div className="flex items-center gap-3 px-3 py-2 mb-1 hover:bg-surface-soft rounded-md cursor-pointer transition-colors">
-          <div className="h-7 w-7 rounded-md bg-brand-lavender border border-hairline-strong flex items-center justify-center shrink-0">
-            <span className="text-brand-purple800 text-xs font-semibold">
+          <div className="h-7 w-7 rounded-md bg-[#f0eeec] border border-hairline-strong flex items-center justify-center shrink-0">
+            <span className="text-[#37352f] text-xs font-semibold">
               {user?.name?.[0]?.toUpperCase()}
             </span>
           </div>
@@ -104,7 +104,7 @@ export default function Sidebar() {
         <button
           onClick={handleLogout}
           className="flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium
-                     text-slate hover:text-ink hover:bg-surface-soft transition-colors w-full"
+                     text-slate hover:text-ink hover:bg-surface-soft transition-[transform,colors] duration-200 ease-[var(--ease-out)] active:scale-[0.98] w-full"
         >
           <LogOut className="h-4 w-4" />
           Sign out

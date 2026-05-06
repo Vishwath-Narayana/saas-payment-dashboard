@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { transactionAPI } from '../../api/transaction.api'
 import { toast } from 'sonner'
+import { cn } from '@/lib/utils'
 import {
   Dialog, DialogContent, DialogHeader,
   DialogTitle, DialogDescription
@@ -14,7 +15,7 @@ import {
   Select, SelectContent, SelectItem,
   SelectTrigger, SelectValue
 } from '@/components/ui/select'
-import { Loader2, ShieldCheck } from 'lucide-react'
+import { Loader2, ShieldCheck, CreditCard, Smartphone, Wallet as WalletIcon } from 'lucide-react'
 
 export default function CreatePaymentModal({ open, onClose }) {
   const queryClient     = useQueryClient()
@@ -61,15 +62,15 @@ export default function CreatePaymentModal({ open, onClose }) {
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="!bg-white border-hairline shadow-2xl text-ink sm:max-w-md rounded-lg overflow-hidden">
-        <DialogHeader className="p-6 pb-2">
-          <DialogTitle className="text-ink font-bold text-2xl tracking-tight">Create Payment</DialogTitle>
-          <DialogDescription className="text-slate text-[15px]">
+      <DialogContent className="!bg-white border-hairline shadow-[var(--shadow-modal)] text-ink sm:max-w-md rounded-[var(--radius-card)] overflow-hidden p-0 gap-0">
+        <DialogHeader className="p-8 pb-4 space-y-1">
+          <DialogTitle className="text-ink font-semibold text-[28px] leading-[1.2] tracking-tight">Create Payment</DialogTitle>
+          <DialogDescription className="text-slate text-[16px] leading-[1.5]">
             Simulate a new payment transaction
           </DialogDescription>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="p-6 pt-0 space-y-5">
+        <form onSubmit={handleSubmit} className="p-8 pt-0 space-y-6">
           <div className="space-y-2">
             <Label className="text-ink font-medium text-[14px]">Amount (₹)</Label>
             <Input
@@ -94,9 +95,24 @@ export default function CreatePaymentModal({ open, onClose }) {
                 <SelectValue placeholder="Select method" />
               </SelectTrigger>
               <SelectContent className="bg-white border-hairline rounded-md shadow-md">
-                <SelectItem value="card"   className="text-ink focus:bg-surface-soft font-sans cursor-pointer">💳 Card</SelectItem>
-                <SelectItem value="upi"    className="text-ink focus:bg-surface-soft font-sans cursor-pointer">📱 UPI</SelectItem>
-                <SelectItem value="wallet" className="text-ink focus:bg-surface-soft font-sans cursor-pointer">👛 Wallet</SelectItem>
+                <SelectItem value="card"   className="text-ink focus:bg-surface-soft font-sans cursor-pointer py-2.5">
+                  <div className="flex items-center gap-2">
+                    <CreditCard className="h-4 w-4 text-slate" />
+                    <span>Card</span>
+                  </div>
+                </SelectItem>
+                <SelectItem value="upi"    className="text-ink focus:bg-surface-soft font-sans cursor-pointer py-2.5">
+                  <div className="flex items-center gap-2">
+                    <Smartphone className="h-4 w-4 text-slate" />
+                    <span>UPI</span>
+                  </div>
+                </SelectItem>
+                <SelectItem value="wallet" className="text-ink focus:bg-surface-soft font-sans cursor-pointer py-2.5">
+                  <div className="flex items-center gap-2">
+                    <WalletIcon className="h-4 w-4 text-slate" />
+                    <span>Wallet</span>
+                  </div>
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -117,31 +133,33 @@ export default function CreatePaymentModal({ open, onClose }) {
           </div>
 
           {/* Idempotency indicator */}
-          <div className="flex items-center gap-2 p-3 bg-cardTint-mint/30 border border-semantic-success/20 rounded-md">
-            <ShieldCheck className="h-4 w-4 text-semantic-success shrink-0" />
-            <p className="text-semantic-success text-[13px] font-medium">
+          <div className="flex items-center gap-3 p-4 bg-[#d9f3e1] border border-[#1aae39]/20 rounded-[8px]">
+            <ShieldCheck className="h-4 w-4 text-[#1aae39] shrink-0" />
+            <p className="text-[#1aae39] text-[13px] font-semibold tracking-tight">
               Protected against duplicate payments
             </p>
           </div>
 
-          <div className="flex gap-3 pt-2">
+          <div className="flex gap-3 pt-4">
             <Button
               type="button"
               variant="outline"
               onClick={onClose}
-              className="flex-1 bg-white hover:bg-surface border border-hairline-strong text-ink h-[44px] rounded-md font-bold text-[15px] transition-all"
+              className="flex-1 h-[44px] text-[14px] font-medium"
             >
               Cancel
             </Button>
             <Button
               type="submit"
               disabled={isPending}
-              className="flex-1 bg-white hover:bg-surface border border-hairline-strong text-ink h-[44px] rounded-md font-bold text-[15px] transition-all"
+              className="flex-1 h-[44px] text-[14px] font-semibold bg-white !bg-white text-[#1a1a1a] !text-[#1a1a1a] border border-[#e5e3df] shadow-sm hover:bg-[#f6f5f4] transition-all"
             >
-              {isPending
-                ? <><Loader2 className="h-4 w-4 mr-2 animate-spin" />Processing...</>
-                : 'Create Payment'
-              }
+              <div className={cn("flex items-center justify-center blur-sm-transition", isPending && "transitioning")}>
+                {isPending
+                  ? <><Loader2 className="h-4 w-4 mr-2 animate-spin" />Processing...</>
+                  : 'Confirm Payment'
+                }
+              </div>
             </Button>
           </div>
         </form>

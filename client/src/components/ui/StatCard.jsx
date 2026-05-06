@@ -9,7 +9,9 @@ export default function StatCard({
   iconColor = 'text-indigo-400',
   iconBg   = 'bg-indigo-400/10',
   trend,      // { value: 12.5, label: 'vs last month' }
-  loading = false
+  loading = false,
+  className,
+  style
 }) {
   if (loading) return <StatCardSkeleton />
 
@@ -17,27 +19,29 @@ export default function StatCard({
   const trendNeutral  = trend?.value === 0
 
   return (
-    <div className="bg-canvas border border-hairline rounded-[12px] p-6 space-y-4 hover:shadow-sm transition-shadow">
-      
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <p className="text-slate text-sm font-medium tracking-tight">{title}</p>
-        <div className={cn('p-2 rounded-md', iconBg)}>
-          <Icon className={cn('h-5 w-5', iconColor)} />
+    <div
+      className={cn(
+        "bg-canvas border border-hairline p-6 rounded-[var(--radius-card)] shadow-sm hover:shadow-md transition-all duration-300",
+        className
+      )}
+      style={style}
+    >
+      <div className="flex items-start justify-between">
+        <div className="space-y-1">
+          <p className="text-slate text-[14px] font-medium tracking-tight">{title}</p>
+          <h3 className="text-ink font-bold text-2xl tracking-tight leading-none">{value}</h3>
+          {subtitle && (
+            <p className="text-stone text-[13px] mt-1">{subtitle}</p>
+          )}
         </div>
-      </div>
-
-      {/* Value */}
-      <div className="space-y-1">
-        <p className="text-ink text-[28px] leading-tight font-semibold tracking-tight">{value}</p>
-        {subtitle && (
-          <p className="text-stone text-xs font-medium">{subtitle}</p>
-        )}
+        <div className={cn("p-2 rounded-md", iconColor)}>
+          <Icon className="h-5 w-5 opacity-80" />
+        </div>
       </div>
 
       {/* Trend */}
       {trend && (
-        <div className="flex items-center gap-1.5 mt-2">
+        <div className="flex items-center gap-1.5 mt-4">
           {trendNeutral ? (
             <Minus className="h-3.5 w-3.5 text-stone" />
           ) : trendPositive ? (

@@ -53,8 +53,8 @@ export default function MonthlyChart({ data = [] }) {
                 )}
                 wrapperStyle={{ paddingTop: '20px' }}
               />
-              <Bar dataKey="success" fill="#1aae39" radius={[4,4,0,0]} barSize={20} />
-              <Bar dataKey="failed"  fill="#e03131" radius={[4,4,0,0]} barSize={20} />
+              <Bar dataKey="success" fill="#2a9d99" radius={[4,4,0,0]} barSize={16} />
+              <Bar dataKey="failed"  fill="#dd5b00" radius={[4,4,0,0]} barSize={16} />
             </BarChart>
           </ResponsiveContainer>
         </div>

@@ -5,9 +5,9 @@ import {
 import { formatCurrency } from '../../utils/formatCurrency'
 
 const COLORS = {
-  card:   '#7b3ff2', // primary
-  upi:    '#2a9d99', // teal
-  wallet: '#ff64c8', // pink
+  card:   '#0a1530', // Navy
+  upi:    '#2a9d99', // Teal
+  wallet: '#787671', // Steel
 }
 
 const CustomTooltip = ({ active, payload }) => {

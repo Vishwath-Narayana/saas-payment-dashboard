@@ -25,7 +25,7 @@ export default function EmptyState({
       {action && (
         <Button
           onClick={action.onClick}
-          className="bg-primary hover:bg-primary-pressed text-onPrimary font-medium rounded-md px-4 h-[36px]"
+          className="rounded-md px-6"
         >
           {action.label}
         </Button>

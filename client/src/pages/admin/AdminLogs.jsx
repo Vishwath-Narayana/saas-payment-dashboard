@@ -11,9 +11,9 @@ import { formatDate } from '../../utils/formatDate'
 import { FileText, ChevronLeft, ChevronRight } from 'lucide-react'
 
 const ACTION_COLORS = {
-  PAYMENT_CREATED: 'bg-cardTint-lavender text-brand-purple',
-  USER_LOGIN:      'bg-cardTint-sky text-brand-teal',
-  USER_SIGNUP:     'bg-cardTint-mint text-semantic-success',
+  PAYMENT_CREATED: 'bg-[#ffe8d4] text-[#dd5b00]',
+  USER_LOGIN:      'bg-[#dcecfa] text-[#0a1530]',
+  USER_SIGNUP:     'bg-[#d9f3e1] text-[#1aae39]',
   PAYMENT_VIEWED:  'bg-surface border border-hairline-strong text-charcoal',
 }
 
@@ -85,14 +85,15 @@ export default function AdminLogs() {
           />
         ) : (
           <div className="divide-y divide-hairline">
-            {logs.map(log => (
+            {logs.map((log, index) => (
               <div key={log._id}
-                className="flex items-center gap-4 px-6 py-4 hover:bg-surface-soft transition-colors cursor-pointer"
+                className="flex items-center gap-4 px-6 py-4 hover:bg-surface-soft transition-colors cursor-pointer animate-slide-up-fade opacity-0"
+                style={{ animationDelay: `${index * 30}ms` }}
               >
                 {/* Avatar */}
-                <div className="h-8 w-8 rounded-full bg-brand-lavender border border-hairline-strong flex items-center
+                <div className="h-8 w-8 rounded-full bg-[#f0eeec] border border-hairline-strong flex items-center
                                 justify-center shrink-0">
-                  <span className="text-brand-purple800 text-xs font-semibold">
+                  <span className="text-[#37352f] text-xs font-semibold">
                     {log.userName?.[0]?.toUpperCase() || '?'}
                   </span>
                 </div>

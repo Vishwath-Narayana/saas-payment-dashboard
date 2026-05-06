@@ -12,21 +12,61 @@
     --card-foreground: 0 0% 10%;
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 10%;
-    --primary: 260 87% 60%; /* #7b3ff2 */
-    --primary-foreground: 0 0% 100%; /* #ffffff */
-    --secondary: 0 0% 96%; /* #f6f5f4 */
+    --primary: 0 0% 100%; /* #ffffff - White Primary */
+    --primary-foreground: 0 0% 10%; /* #1a1a1a - Ink */
+    --secondary: 30 4% 96%; /* #f6f5f4 - Notion Surface */
     --secondary-foreground: 0 0% 10%;
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 45%;
-    --accent: 0 0% 96%;
+    --muted: 30 4% 96%;
+    --muted-foreground: 45 4% 45%; /* #787671 */
+    --accent: 30 4% 96%;
     --accent-foreground: 0 0% 10%;
-    --destructive: 0 84% 60%; /* #e03131 */
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 90%; /* #e5e3df */
-    --input: 0 0% 90%;
-    --ring: 260 87% 60%;
-    --radius: 0.75rem; /* 12px for cards */
+    --border: 40 7% 89%; /* #e5e3df - Notion Hairline */
+    --input: 40 7% 89%;
+    --ring: 0 0% 10%; /* #1a1a1a */
+    --radius: 0.5rem; /* 8px for buttons/inputs per Notion spec */
+    --radius-card: 0.75rem; /* 12px for cards */
+
+    /* Notion Elevation Level 4 */
+    --shadow-modal: 0 16px 48px -8px rgba(15, 15, 15, 0.16);
+
+    /* Custom Easing Curves - Emil Kowalski inspired */
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+    --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
   }
+}
+
+@layer utilities {
+  .transition-standard {
+    transition: all 200ms var(--ease-out);
+  }
+  .transition-spring {
+    transition: all 400ms var(--ease-drawer);
+  }
+  .blur-sm-transition {
+    filter: blur(0px);
+    transition: filter 200ms var(--ease-out);
+  }
+  .blur-sm-transition.transitioning {
+    filter: blur(2px);
+  }
+}
+
+@keyframes slide-up-fade {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-slide-up-fade {
+  animation: slide-up-fade 400ms var(--ease-out) forwards;
 }
 
 @layer base {

@@ -16,11 +16,16 @@ import { formatCurrency } from '../../utils/formatCurrency'
 import { formatDate } from '../../utils/formatDate'
 import {
   Plus, Search, ArrowLeftRight,
-  ChevronLeft, ChevronRight, Download
+  ChevronLeft, ChevronRight, Download,
+  CreditCard, Smartphone, Wallet as WalletIcon
 } from 'lucide-react'
 import { exportAPI } from '../../api/analytics.api'
 
-const METHOD_ICONS = { card: '💳', upi: '📱', wallet: '👛' }
+const METHOD_MAP = {
+  card:   { label: 'Card',   icon: CreditCard },
+  upi:    { label: 'UPI',    icon: Smartphone },
+  wallet: { label: 'Wallet', icon: WalletIcon },
+}
 
 function TableSkeleton() {
   return (
@@ -134,9 +139,9 @@ export default function Transactions() {
           </SelectTrigger>
           <SelectContent className="bg-canvas border-hairline rounded-md shadow-md">
             <SelectItem value="all"    className="text-ink focus:bg-surface-soft">All Methods</SelectItem>
-            <SelectItem value="card"   className="text-ink focus:bg-surface-soft">💳 Card</SelectItem>
-            <SelectItem value="upi"    className="text-ink focus:bg-surface-soft">📱 UPI</SelectItem>
-            <SelectItem value="wallet" className="text-ink focus:bg-surface-soft">👛 Wallet</SelectItem>
+            <SelectItem value="card"   className="text-ink focus:bg-surface-soft">Card</SelectItem>
+            <SelectItem value="upi"    className="text-ink focus:bg-surface-soft">UPI</SelectItem>
+            <SelectItem value="wallet" className="text-ink focus:bg-surface-soft">Wallet</SelectItem>
           </SelectContent>
         </Select>
 
@@ -177,18 +182,19 @@ export default function Transactions() {
               <div className="col-span-2">Amount</div>
               <div className="col-span-2">Method</div>
               <div className="col-span-2">Status</div>
-              {isAdmin && <div className="col-span-3">User</div>}
-              <div className={isAdmin ? 'col-span-3' : 'col-span-4'}>Description</div>
+              {isAdmin && <div className="col-span-2">User</div>}
+              <div className={isAdmin ? 'col-span-2' : 'col-span-4'}>Description</div>
               <div className="col-span-2 text-right">Date</div>
             </div>
 
             {/* Rows */}
             <div className="divide-y divide-hairline">
-              {transactions.map((t) => (
+              {transactions.map((t, index) => (
                 <div
                   key={t._id}
                   className="grid grid-cols-12 gap-4 px-6 py-4 items-center
-                             hover:bg-surface-soft transition-colors"
+                             hover:bg-surface-soft transition-colors animate-slide-up-fade opacity-0"
+                  style={{ animationDelay: `${index * 40}ms` }}
                 >
                   <div className="col-span-2">
                     <span className="text-ink font-semibold tracking-tight">
@@ -197,9 +203,19 @@ export default function Transactions() {
                   </div>
 
                   <div className="col-span-2">
-                    <span className="text-charcoal text-sm capitalize">
-                      {METHOD_ICONS[t.method]} {t.method}
-                    </span>
+                    <div className="flex items-center gap-2 text-charcoal text-sm">
+                      {(() => {
+                        const m = METHOD_MAP[t.method]
+                        if (!m) return <span>{t.method}</span>
+                        const Icon = m.icon
+                        return (
+                          <>
+                            <Icon className="h-3.5 w-3.5 text-slate" />
+                            <span className="capitalize">{m.label}</span>
+                          </>
+                        )
+                      })()}
+                    </div>
                   </div>
 
                   <div className="col-span-2">
@@ -207,18 +223,18 @@ export default function Transactions() {
                   </div>
 
                   {isAdmin && (
-                    <div className="col-span-3">
-                      <p className="text-ink text-sm truncate capitalize font-medium">
+                    <div className="col-span-2 overflow-hidden">
+                      <p className="text-ink text-[13px] truncate capitalize font-medium">
                         {t.userId?.name || '—'}
                       </p>
-                      <p className="text-stone text-xs truncate">
+                      <p className="text-stone text-[11px] truncate">
                         {t.userId?.email}
                       </p>
                     </div>
                   )}
 
-                  <div className={isAdmin ? 'col-span-3' : 'col-span-4'}>
-                    <span className="text-charcoal text-sm truncate block">
+                  <div className={isAdmin ? 'col-span-2' : 'col-span-4'}>
+                    <span className="text-charcoal text-[13px] truncate block">
                       {t.description || '—'}
                     </span>
                   </div>

@@ -6,7 +6,7 @@ import MethodPieChart from '../../components/charts/MethodPieChart'
 import MonthlyChart from '../../components/charts/MonthlyChart'
 import { formatCurrency } from '../../utils/formatCurrency'
 import {
-  DollarSign, ArrowLeftRight,
+  IndianRupee, ArrowLeftRight,
   CheckCircle2, XCircle
 } from 'lucide-react'
 
@@ -44,9 +44,11 @@ export default function Dashboard() {
               title="Total Revenue"
               value={formatCurrency(summary?.totalRevenue || 0)}
               subtitle="Successful payments only"
-              icon={DollarSign}
-              iconColor="text-brand-purple"
-              iconBg="bg-cardTint-lavender"
+              icon={IndianRupee}
+              iconColor="text-[#dd5b00]"
+              iconBg="bg-[#ffe8d4]"
+              className="animate-slide-up-fade opacity-0"
+              style={{ animationDelay: '0ms' }}
             />
             <StatCard
               title="Total Transactions"
@@ -55,22 +57,28 @@ export default function Dashboard() {
               icon={ArrowLeftRight}
               iconColor="text-brand-teal"
               iconBg="bg-cardTint-sky"
+              className="animate-slide-up-fade opacity-0"
+              style={{ animationDelay: '50ms' }}
             />
             <StatCard
               title="Success Rate"
               value={`${summary?.successRate || 0}%`}
               subtitle={`${summary?.successCount || 0} successful`}
               icon={CheckCircle2}
-              iconColor="text-semantic-success"
-              iconBg="bg-cardTint-mint"
+              iconColor="text-brand-teal"
+              iconBg="bg-cardTint-sky"
+              className="animate-slide-up-fade opacity-0"
+              style={{ animationDelay: '100ms' }}
             />
             <StatCard
               title="Failed"
               value={summary?.failedCount || 0}
               subtitle={`${summary?.pendingCount || 0} pending`}
               icon={XCircle}
-              iconColor="text-semantic-error"
-              iconBg="bg-cardTint-rose"
+              iconColor="text-brand-orange"
+              iconBg="bg-cardTint-peach"
+              className="animate-slide-up-fade opacity-0"
+              style={{ animationDelay: '150ms' }}
             />
           </>
         )}
